@@ -1,5 +1,5 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from "react";
+import styled from "styled-components";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -12,6 +12,6 @@ const Header: React.FC = () => {
       <h1>Header</h1>
     </HeaderWrapper>
   );
-}
+};
 
 export default Header;

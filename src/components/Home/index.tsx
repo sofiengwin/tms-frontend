@@ -1,8 +1,12 @@
-import * as React from 'react';
+import * as React from "react";
+import { Container, Button } from "./styled";
 
 const Home: React.FC = () => {
   return (
-    <h1>Hello World</h1>
+    <Container>
+      <Button>Collect Payment</Button>
+      <Button>New Report</Button>
+    </Container>
   );
 };
 
