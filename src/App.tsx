@@ -6,6 +6,7 @@ import Layout from "./components/ui/Layout";
 import Home from "./components/Home";
 import Report from "./components/Report";
 import Profile from "./components/Profile/Profile";
+import CollectPayment from './components/CollectPayment';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             </Route>
             <Route exact path='/profile'>
               <Profile />
+            </Route>
+            <Route exact path='/collect-payment'>
+              <CollectPayment />
             </Route>
           </Switch>
         </Router>
