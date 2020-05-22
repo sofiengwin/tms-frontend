@@ -1,40 +1,39 @@
 // @ts-nocheck
 import * as React from 'react';
 import QrReader from 'react-qr-scanner';
-import styled from 'styled-components';
+import SuccessModal from './Success';
+import { Button } from 'react-bootstrap';
+import Scanner from './Scanner';
 
-const Preview = styled.div`
-  background: black;
-`;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 500px 1fr;
-`;
-
-const previewStyle = {
-  height: 300,
-  width: '100%',
-}
 
 const CollectPayment = () => {
-  const [data, setData] = React.useState({})
+  const [data, setData] = React.useState('')
+  const [success, setSuccess] = React.useState(false)
+  const [errorModal, setErrorModal] = React.useState(false)
+
+  const handleError = (error) => {
+    if (error) {
+      setErrorModal(true);
+    }
+  }
+
+  const onScan = (data) => {
+    console.log({data});
+    setData(data);
+  }
+
   return (
-    <Wrapper>
-      <h1>Collect Payment</h1>
-      <Preview>
-        <QrReader
-          onScan={(data: any) => setData(data)}
-          onError={(err: any) => console.log({err})}
-          style={previewStyle}
-        />
-      </Preview>
-      <div>
-        <h1>
-          {JSON.stringify(data)}
-        </h1>
-      </div>
-    </Wrapper>
+    <>
+      {data.length ? 
+        (<div>
+          <h4>Collect payment for MOT {data}</h4>
+          <Button variant="primary">Record Payment</Button>
+        </div>) :
+        (
+          <Scanner onError={handleError} onScan={onScan} />
+        )
+      }
+    </>
   );
 }
 

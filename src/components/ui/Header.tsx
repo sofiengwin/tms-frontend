@@ -1,16 +1,16 @@
 import * as React from "react";
-import styled from "styled-components";
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  background: blue;
-`;
+import {Navbar, Nav} from 'react-bootstrap';
 
 const Header: React.FC = () => {
   return (
-    <HeaderWrapper>
-      <h1>Header</h1>
-    </HeaderWrapper>
+    <Navbar variant="light" bg="light" >
+      <Nav className="mr-auto">
+        <Nav.Link href="#home">Back</Nav.Link>
+      </Nav>
+      <Nav className="ml-auto">
+        <Nav.Link href="#home">Forward</Nav.Link>
+      </Nav>
+    </Navbar>
   );
 };
 

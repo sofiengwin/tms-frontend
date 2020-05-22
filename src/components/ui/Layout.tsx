@@ -1,13 +1,18 @@
 import * as React from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import Footer from "./Footer";
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 50px 1fr 50px;
-  background: red;
+  grid-template-rows: 50px 1fr;
   min-height: 100vh;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 `;
 
 interface Props {
@@ -18,8 +23,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Container>
       <Header />
-      <div>{children}</div>
-      <Footer />
+      <MainContent>{children}</MainContent>
     </Container>
   );
 };
