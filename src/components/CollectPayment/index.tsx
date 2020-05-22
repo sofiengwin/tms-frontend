@@ -19,7 +19,9 @@ const CollectPayment = () => {
 
   const onScan = (data) => {
     console.log({data});
-    setData(data);
+    if (data) {
+      setData(data);
+    }
   }
 
   return (
