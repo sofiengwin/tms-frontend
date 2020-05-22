@@ -1,12 +1,13 @@
 import * as React from "react";
 import {Link} from 'react-router-dom';
-import { Container, Button } from "./styled";
+import { Container } from "./styled";
+import Button from 'react-bootstrap/Button';
 
 const Home: React.FC = () => {
   return (
     <Container>
-      <Button><Link to="collect-payment">Collect Payment</Link></Button>
-      <Button><Link to="report">New Report</Link></Button>
+      <Button variant="primary" size='lg' block><Link to="collect-payment" style={{color: 'white'}}>Collect Payment</Link></Button>
+      <Button variant="primary" size='lg' block><Link to="report" style={{color: 'white'}}>New Report</Link></Button>
     </Container>
   );
 };
