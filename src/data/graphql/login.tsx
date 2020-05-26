@@ -1,5 +1,5 @@
 import { FetchQl } from "../../lib/client";
-export {IAdmin} from '../models/Admin';
+import {IAdmin} from '../models/Admin';
 
 
 const QUERY = `
@@ -26,11 +26,13 @@ interface Response {
   }
 }
 
-export default function login(client: FetchQl, {email, password}: {email: string, password: string}) {
-  const response: Response = client(QUERY, {email, password});
+export default async function login(client: FetchQl, {email, password}: {email: string, password: string}) {
+  // @ts-ignore
+  const response: Response = await client(QUERY, {email, password});
+  console.log({response})
 
   if (response.login.errors) {
-    throw response.login.errors;
+    return response.login;
   }
 
   return response.login

@@ -1,31 +1,26 @@
-import React, { useState, FormEvent, useContext } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import TextInput from '../ui/TextInput';
+import {observer} from 'mobx-react';
 
-const loginDetails = [
-  { type: "email", placeholder: "Email Address" },
-  { type: "password", placeholder: "Password" },
-];
-
-interface loginInterface {
+const errorMessages = {
+  invalid_emailOrPassword: 'Problem logging in! Check your Email and Password'
+}
+interface ILogin {
   email: string;
   password: string;
 }
 
 const Login = () => {
-  const context = useContext(AuthContext);
-  const login = context.appService.login;
-  const isLogedin = context.appService.isLogedin;
+  const {appService} = useContext(AuthContext);
   const history = useHistory();
-  const [user, setUser] = useState<loginInterface>({
+  const [user, setUser] = useState<ILogin>({
     email: "",
     password: "",
   });
-  //   console.log(log);
-  const [error, setError] = useState<boolean>(false);
-  console.log(isLogedin);
 
   const handleInput = ({ target: { name, value } }: any) => {
     setUser({
@@ -34,42 +29,55 @@ const Login = () => {
     });
   };
 
-  const loginUser = (e: any) => {
+  const loginUser = async (e: any) => {
     e.preventDefault();
-    login({ email: user.email, password: user.password });
-    if (isLogedin) {
+
+    await appService.login({ email: user.email, password: user.password });
+
+    if (appService.isLogedin) {
       history.push("/");
     }
-    setError(true);
   };
+
   return (
     <CardStyle>
       <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
       <H1Style>Login Here</H1Style>
+      <Warning>
+        {appService.errors.map((error) => {
+          const message = (errorMessages as any)[error];
+    
+          return <>
+          {message && <Alert key={error} variant="danger">
+            {message}
+          </Alert>}
+          </>
+        })}
+      </Warning>
       <FormStyle>
-        <FormGroupStyle controlId='formBasicEmail'>
-          <Form.Label>Email address</Form.Label>
-          <InputStyle
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            onChange={handleInput}
-          />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
+        <TextInput
+          key={1}
+          label="Email address"
+          type="email"
+          value={user.email}
+          placeholder='Email Address'
+          name='email'
+          onChange={handleInput}
+          error={undefined}
+        />
 
-        <FormGroupStyle controlId='formBasicPassword'>
-          <Form.Label>Password</Form.Label>
-          <InputStyle
-            type='password'
-            placeholder='Password'
-            name='password'
-            onChange={handleInput}
-          />
-        </FormGroupStyle>
-        <ButtonStyle variant='success' type='submit' onClick={loginUser}>
+        <TextInput
+          key={2}
+          label="Password"
+          type="password"
+          value={user.password}
+          placeholder='Password'
+          name='password'
+          onChange={handleInput}
+          error={undefined}
+        />
+
+        <ButtonStyle variant='success' type='submit' onClick={loginUser} loading={appService.isLoading} disabled={appService.isLoading}>
           <IStyle
             size='1'
             color='white'
@@ -82,7 +90,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default observer(Login);
 
 const FormStyle = styled(Form)`
   width: 90%;
@@ -96,12 +104,11 @@ const CardStyle = styled(Card)`
     width: 100%;
   }
 `;
-const FormGroupStyle = styled(Form.Group)`
-  padding: 1em 0;
+
+const Warning = styled.div`
+  margin: 0 20px;
 `;
-const InputStyle = styled(Form.Control)`
-  padding: 1.5em 1em;
-`;
+
 const H1Style = styled.h1`
   text-align: center;
   padding: 0.2em 0;

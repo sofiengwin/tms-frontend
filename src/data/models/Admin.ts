@@ -9,5 +9,3 @@ export interface IAdmin {
   name: string;
   email: string;
 }
-
-export default class Admin {};
