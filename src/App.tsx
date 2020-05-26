@@ -10,13 +10,7 @@ import Profile from "./components/Profile/Profile";
 import CollectPayment from "./components/CollectPayment";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import AppService from "./services/AppService";
-import clientFactory from "./lib/client";
 import { AuthProvider } from "./components/context/AuthContext";
-
-const client = clientFactory("", () => "fake.token");
-
-const appService = new AppService(client);
 
 function App() {
   return (
