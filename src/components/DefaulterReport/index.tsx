@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Report from "./ReportCard";
-import { reports } from "./data";
+import Report from "../Report/ReportCard";
+import { reports } from "../Report/data";
 
 interface ReportInterface {
   id: number;
@@ -12,7 +12,7 @@ interface ReportInterface {
 const index: React.FC = () => {
   return (
     <Container>
-      <Report title='Today Report' data={reports} />
+      <Report title='Defaulters Report' data={reports} />
     </Container>
   );
 };
