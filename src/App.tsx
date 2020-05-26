@@ -11,6 +11,7 @@ import CollectPayment from "./components/CollectPayment";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { AuthProvider } from "./components/context/AuthContext";
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
@@ -19,27 +20,27 @@ function App() {
         <Layout>
           <Router>
             <Switch>
-              <Route exact path='/'>
+              <PrivateRoute exact path='/'>
                 <Home />
-              </Route>
-              <Route exact path='/report'>
+              </PrivateRoute>
+              <PrivateRoute exact path='/report'>
                 <Report />
-              </Route>
-              <Route exact path='/defaulter'>
+              </PrivateRoute>
+              <PrivateRoute exact path='/defaulter'>
                 <Defaulter />
-              </Route>
-              <Route exact path='/profile'>
+              </PrivateRoute>
+              <PrivateRoute exact path='/profile'>
                 <Profile />
-              </Route>
+              </PrivateRoute>
               <Route exact path='/login'>
                 <Login />
               </Route>
-              <Route exact path='/register'>
+              <PrivateRoute exact path='/register'>
                 <Register />
-              </Route>
-              <Route exact path='/collect-payment'>
+              </PrivateRoute>
+              <PrivateRoute exact path='/collect-payment'>
                 <CollectPayment />
-              </Route>
+              </PrivateRoute>
             </Switch>
           </Router>
         </Layout>
