@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Table, Tabs, Tab } from "react-bootstrap";
 
 const Profile: React.FC = () => {
   const [change, setChange] = useState({
@@ -8,53 +9,41 @@ const Profile: React.FC = () => {
   });
   return (
     <Container>
-      <Tab>
-        <Ul>
-          <Li
-            onClick={() =>
-              setChange({
-                first: true,
-                second: false,
-              })
-            }
-          >
-            QR
-          </Li>
-          <Li
-            onClick={() =>
-              setChange({
-                first: false,
-                second: true,
-              })
-            }
-          >
-            IMAGE
-          </Li>
-        </Ul>
-      </Tab>
-      <Image>
-        {change.first && <div className='first'>First Image</div>}
-        {change.second && <div className='second'>Second Image</div>}
-      </Image>
+      <TabStyle defaultActiveKey='profile'>
+        <Tab eventKey='home' title='QR'>
+          <Image>
+            <div className='first'></div>
+          </Image>
+        </Tab>
+        <Tab eventKey='profile' title='Image'>
+          <Image>
+            <div className='second'></div>
+          </Image>
+        </Tab>
+      </TabStyle>
       <UnOrderList>
-        {[
-          "white",
-          "blue",
-          "yellow",
-          "green",
-          "teal",
-          "linen",
-          "coral",
-          "coral",
-          "coral",
-          "coral",
-          "coral",
-        ].map((a: string) => (
-          <List color={a}>
-            <span>{a}</span>
-            <p></p>
-          </List>
-        ))}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Date Time</th>
+              <th>Amount</th>
+              {/* <th>Cashier</th> */}
+              <th>MOT Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array(5)
+              .fill("yes")
+              .map(({ y: string }) => (
+                <tr>
+                  <td>Table cell</td>
+                  <td>Table cell</td>
+                  {/* <td>Table cell</td> */}
+                  <td>Table cell</td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
       </UnOrderList>
     </Container>
   );
@@ -64,10 +53,19 @@ export default Profile;
 
 export const Container = styled.div`
   padding: 2% 0;
+  width: 100%;
 `;
-export const Tab = styled.div`
+export const TabStyle = styled(Tabs)`
   max-width: 90%;
   margin: auto;
+
+  .nav-link {
+    width: 50%;
+  }
+
+  @media (max-width: 769px) {
+    max-width: 100%;
+  }
 `;
 export const Ul = styled.ul`
   list-style: none;
@@ -96,6 +94,10 @@ export const List = styled.li`
   justify-content: space-between;
   align-items: center;
 
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+
   p {
     width: 5em;
     height: 2em;
@@ -118,5 +120,14 @@ export const Image = styled.div`
     margin: auto;
     border-radius: 0.3em;
     height: 500px;
+  }
+
+  @media (max-width: 769px) {
+    .first {
+      max-width: 100%;
+    }
+    .second {
+      max-width: 100%;
+    }
   }
 `;
