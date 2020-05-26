@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import TextInput from '../ui/TextInput';
 import {observer} from 'mobx-react';
@@ -22,6 +22,10 @@ const Login = () => {
     password: "",
   });
 
+  let location = useLocation();
+  // @ts-ignore
+  let { from } = location.state || { from: { pathname: "/" } };
+
   const handleInput = ({ target: { name, value } }: any) => {
     setUser({
       ...user,
@@ -35,7 +39,7 @@ const Login = () => {
     await appService.login({ email: user.email, password: user.password });
 
     if (appService.isLogedin) {
-      history.push("/");
+      history.replace(from);
     }
   };
 
