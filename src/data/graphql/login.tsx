@@ -1,5 +1,5 @@
 import { FetchQl } from "../../lib/client";
-import {IAdmin} from '../models/Admin';
+import {IAdmin, adminFields} from '../models/Admin';
 
 
 const QUERY = `
@@ -7,8 +7,7 @@ const QUERY = `
     login(input: {email: $email, password: $password}) {
       hhh
       admin {
-        name
-        email
+        ${adminFields}
       }
       errors {
         code

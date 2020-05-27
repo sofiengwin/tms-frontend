@@ -1,74 +1,131 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import styled from "styled-components";
+import TextInput from '../ui/TextInput';
+import {ICreateDriver} from '../../data/models/Driver';
+import { AuthContext } from "../context/AuthContext";
+import { useHistory } from "react-router-dom";
+import Warning from '../ui/AlertWarning';
+
+const cantBeBlank = (fiieldName: string) => `${fiieldName} can't be blank`
+
+const errorMessages = {
+  blank_name: cantBeBlank('Name'),
+  "blank_phone_number": cantBeBlank('Phone Number'),
+  "blank_mot_number": cantBeBlank('MOT Number'),
+  "blank_address": cantBeBlank('Address'),
+  "blank_area_of_operation": cantBeBlank('Area Of Operation'),
+  "blank_hometown": cantBeBlank('Hometown'),
+  "blank_state": cantBeBlank('State')
+}
 
 const Register = () => {
-  const [error, setError] = useState<boolean>(false);
-  //   const error: boolean = false;
+  const [errors, setErrors] = useState<string[]>([]);
+  const [driver, setDriver] = useState<ICreateDriver>({
+    name: '',
+    phoneNumber: '',
+    motNumber: '',
+    address: '',
+    state: '',
+    hometown: '',
+    areaOfOperation: ''
+  })
 
-  const registerUser = (e: FormEvent) => {
-    e.preventDefault();
-    setError(true);
+  const handleInput = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => {
+    setDriver({
+      ...driver,
+      [name]: value,
+    })
   };
+
+  const {appService} = useContext(AuthContext);
+  const history = useHistory()
+
+  const createDriver = async (e: any) => {
+    e.preventDefault();
+    const createdDriver = await appService.createDriver(driver, setErrors)
+
+    if (createdDriver) {
+      history.push('/profile')
+    }
+  };
+
+  console.log({errors});
+
   return (
     <CardStyle>
       <IStyle size='3em' color='teal' className='fas fa-users'></IStyle>
-      <H1Style>Create User</H1Style>
-      <FormStyle submit={registerUser}>
-        <FormGroupStyle>
-          <Form.Label>Name</Form.Label>
-          <InputStyle type='text' placeholder='Name' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
-        <FormGroupStyle>
-          <Form.Label>Phone</Form.Label>
-          <InputStyle type='text' placeholder='Phone' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
-        <FormGroupStyle>
-          <Form.Label>Address</Form.Label>
-          <InputStyle type='text' placeholder='Address' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
-        <FormGroupStyle>
-          <Form.Label>MOT Number</Form.Label>
-          <InputStyle type='text' placeholder='MOT Number' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
-        <FormGroupStyle>
-          <Form.Label>State</Form.Label>
-          <InputStyle type='text' placeholder='State' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
-        <FormGroupStyle>
-          <Form.Label>Home Town</Form.Label>
-          <InputStyle type='text' placeholder='Home Town' />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </FormGroupStyle>
+      <H1Style>Create Driver</H1Style>
+      <Warning errors={errors} errorMessages={errorMessages}/>
+      <FormStyle onSubmit={createDriver}>
+        <TextInput
+          name='name'
+          type='text'
+          placeholder='Name'
+          value={driver.name}
+          onChange={handleInput}
+          label='Full Name'
+        />
+        <TextInput
+          name='phoneNumber'
+          type='text'
+          placeholder='Phone Number'
+          value={driver.phoneNumber}
+          onChange={handleInput}
+          label='Phone Number'
+        />
 
-        <FormGroupStyle controlId='formBasicPassword'>
-          <Form.Label>Area Of Operation</Form.Label>
-          <InputStyle type='password' placeholder='Area Of Operation' />
-        </FormGroupStyle>
+        <TextInput
+          name='motNumber'
+          type='text'
+          placeholder='MOT Number'
+          value={driver.motNumber}
+          onChange={handleInput}
+          label='MOT Number'
+        />
+
+        <TextInput
+          name='address'
+          type='text'
+          placeholder='Residential Address'
+          value={driver.address}
+          onChange={handleInput}
+          label='Residential Address'
+        />
+        <TextInput
+          name='state'
+          type='text'
+          placeholder='State Of Origin'
+          value={driver.state}
+          onChange={handleInput}
+          label='State Of Origin'
+        />
+
+        <TextInput
+          name='hometown'
+          type='text'
+          placeholder='Hometown'
+          value={driver.hometown}
+          onChange={handleInput}
+          label='Hometown'
+        />
+
+        <TextInput
+          name='areaOfOperation'
+          type='text'
+          placeholder='Area Of Operation'
+          value={driver.areaOfOperation}
+          onChange={handleInput}
+          label='Area Of Operation'
+        />
+
         <ButtonStyle variant='success' type='submit'>
           <IStyle
             size='1'
             color='white'
             className='fas fa-sign-in-alt'
           ></IStyle>{" "}
-          Register
+          Save
         </ButtonStyle>
       </FormStyle>
     </CardStyle>
@@ -89,12 +146,7 @@ const CardStyle = styled(Card)`
     width: 100%;
   }
 `;
-const FormGroupStyle = styled(Form.Group)`
-  padding: 1em 0;
-`;
-const InputStyle = styled(Form.Control)`
-  padding: 1.5em 1em;
-`;
+
 const H1Style = styled.h1`
   text-align: center;
   padding: 0.2em 0;
