@@ -5,11 +5,12 @@ import collectPaymentCall, {
 } from "../data/graphql/collectPayment";
 import loginCall from '../data/graphql/login';
 import {IAdmin} from '../data/models/Admin';
+import meCall from '../data/graphql/me';
 
 
 export default class AppService {
   client: FetchQl;
-  isLogedin: boolean = false;
+  @observable isLogedin: boolean = false;
   @observable isLoading: boolean = false
   admin: IAdmin | null = null;
   errors = observable.array<string>([]);
@@ -23,7 +24,7 @@ export default class AppService {
   };
 
   @action
-  async login ({ email, password }: { email: string; password: string }) {
+  async login ({ email, password }: { email: string; password: string }, handleError: (errors: string[]) => void) {
     this.isLoading = true;
     const {admin, hhh: accessToken, errors} = await loginCall(this.client, {email, password})
     
@@ -32,8 +33,27 @@ export default class AppService {
       this.admin = admin;
       localStorage.setItem('session', accessToken)
     } else if (errors) {
-      this.errors = errors.map(({code, field}: any) => `${code}_${field}`);
+      const e = errors.map(({code, field}: any) => `${code}_${field}`);
+      handleError(e);
     }
     this.isLoading = false;
   };
+
+  @action
+  async restoreSession() {
+    this.isLoading = true;
+
+    const {admin} = await meCall(this.client);
+
+    if (admin) {
+      this.admin = admin;
+      this.isLogedin = true;
+    }
+    this.isLoading = false;
+  }
+
+  @action
+  logginIn() {
+    this.isLogedin = true;
+  }
 }
