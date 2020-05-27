@@ -21,6 +21,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [errors, setError] = useState<string[]>([])
 
   let location = useLocation();
   // @ts-ignore
@@ -36,7 +37,7 @@ const Login = () => {
   const loginUser = async (e: any) => {
     e.preventDefault();
 
-    await appService.login({ email: user.email, password: user.password });
+    await appService.login({ email: user.email, password: user.password }, setError);
 
     if (appService.isLogedin) {
       history.replace(from);
@@ -48,7 +49,7 @@ const Login = () => {
       <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
       <H1Style>Login Here</H1Style>
       <Warning>
-        {appService.errors.map((error) => {
+        {errors.map((error) => {
           const message = (errorMessages as any)[error];
     
           return <>
