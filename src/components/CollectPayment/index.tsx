@@ -26,7 +26,7 @@ const CollectPayment = () => {
 
   return (
     <>
-      {data.length ? 
+      {true ? 
         (<div>
           <h4>Collect payment for MOT {data}</h4>
           <Button variant="primary">Record Payment</Button>
