@@ -8,6 +8,7 @@ import {IAdmin} from '../data/models/Admin';
 import meCall from '../data/graphql/me';
 import createDriverCall from '../data/graphql/createDriver';
 import { ICreateDriver } from '../data/models/Driver';
+import fetchPaymentsCall from '../data/graphql/fetchPayments';
 
 export default class AppService {
   client: FetchQl;
@@ -81,6 +82,14 @@ export default class AppService {
     } else {
       handleError(errors.map(({code, field}: any) => `${code}_${field}`))
     }
+  }
 
+  @action
+  async fetchPayments() {
+    this.isLoading = true;
+    const payments = await fetchPaymentsCall(this.client);
+    this.isLoading = false;
+
+    return payments
   }
 }

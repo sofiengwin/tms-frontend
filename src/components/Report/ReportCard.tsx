@@ -1,20 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
+import { IPayment } from "../../data/models/Payment";
 
-interface DataInterface {
-  id: number;
-  date: string;
-  amount: string;
-  cashier: string;
-  MOT: string;
-}
-interface ReportInterface {
+interface Props {
   title: string;
-  data: DataInterface[];
+  data: any[];
 }
 
-const Report: React.FC<ReportInterface> = ({ title, data }) => {
+const Report: React.FC<Props> = ({ title, data }) => {
   return (
     <Container>
       <Flex>
@@ -30,12 +24,12 @@ const Report: React.FC<ReportInterface> = ({ title, data }) => {
               </tr>
             </thead>
             <tbody>
-              {data.map(({ id, date, amount, cashier, MOT }: DataInterface) => (
-                <tr key={id}>
-                  <td>{date}</td>
+              {data.map(({amount, cashier, driver, createdAt }: IPayment, index: number) => (
+                <tr key={index}>
+                  <td>{createdAt}</td>
                   <td>{amount}</td>
-                  <td>{cashier}</td>
-                  <td>{MOT}</td>
+                  <td>{cashier.name}</td>
+                  <td>{driver.motNumber}</td>
                 </tr>
               ))}
             </tbody>
