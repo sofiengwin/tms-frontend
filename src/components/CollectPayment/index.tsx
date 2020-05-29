@@ -1,23 +1,12 @@
-// @ts-nocheck
 import * as React from 'react';
-import QrReader from 'react-qr-scanner';
-import SuccessModal from './Success';
-import { Button } from 'react-bootstrap';
 import Scanner from './Scanner';
+import Payment from './Payment'
 
 
 const CollectPayment = () => {
   const [data, setData] = React.useState('')
-  const [success, setSuccess] = React.useState(false)
-  const [errorModal, setErrorModal] = React.useState(false)
 
-  const handleError = (error) => {
-    if (error) {
-      setErrorModal(true);
-    }
-  }
-
-  const onScan = (data) => {
+  const onScan = (data: string) => {
     console.log({data});
     if (data) {
       setData(data);
@@ -26,13 +15,12 @@ const CollectPayment = () => {
 
   return (
     <>
-      {true ? 
-        (<div>
-          <h4>Collect payment for MOT {data}</h4>
-          <Button variant="primary">Record Payment</Button>
-        </div>) :
+      {data.length ? 
         (
-          <Scanner onError={handleError} onScan={onScan} />
+          <Payment data={data} scanAnother={() => setData('')} />
+        ) :
+        (
+          <Scanner onScan={onScan} />
         )
       }
     </>

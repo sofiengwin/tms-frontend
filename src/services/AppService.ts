@@ -1,8 +1,8 @@
 import {observable, action} from 'mobx';
 import { FetchQl } from "../lib/client";
-import collectPaymentCall, {
-  ICollectPayment,
-} from "../data/graphql/collectPayment";
+import recordPaymentCall, {
+  IRecordPayment,
+} from "../data/graphql/recordPayment";
 import loginCall from '../data/graphql/login';
 import {IAdmin} from '../data/models/Admin';
 import meCall from '../data/graphql/me';
@@ -20,8 +20,16 @@ export default class AppService {
     this.client = client;
   }
 
-  collectPayment = async (data: ICollectPayment) => {
-    await collectPaymentCall(this.client, data);
+  recordPayment = async (data: IRecordPayment, handleError: (errors: string[]) => void) => {
+    this.isLoading = true;
+    const {payment, errors} = await recordPaymentCall(this.client, data);
+
+    this.isLoading = false;
+    if (payment) {
+      return payment;
+    } else if (errors) {
+      handleError(errors)
+    }
   };
 
   @action
