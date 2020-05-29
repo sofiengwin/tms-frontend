@@ -1,7 +1,9 @@
 // @ts-nocheck
-import * as React from 'react';
+import React from 'react';
 import QrReader from 'react-qr-scanner';
 import styled from 'styled-components';
+import ErrorModal from './Error';
+import { useHistory } from 'react-router-dom';
 
 const Preview = styled.div`
   background: black;
@@ -24,26 +26,45 @@ const previewStyle = {
 
 interface Props {
   onScan: (data: any) => void;
-  onError: (error: any) => void;
 }
 
-const Scanner: React.FC<Props> = ({onScan, onError}) => {
+const Scanner: React.FC<Props> = ({onScan}) => {
+  const [errors, setErrors] = React.useState<string[]>([])
+
+  const history = useHistory();
+
+  const handleError = (error: any) => {
+    if (error) {
+      setErrors(['Something is wrong with the scanner. Try again later or contact X'])
+    }
+  }
+
   return (
-    <Wrapper>
-      <h1>Scan Code</h1>
-      <Preview>
-        <QrReader
-          onScan={onScan}
-          onError={onError}
-          style={previewStyle}
-          delay={1000}
-          onLoad={() => console.log('loaded')}
-        />
-      </Preview>
-      <div>
-        <h4>Make sure you are focusing on the entire QR code.</h4>
-      </div>
-    </Wrapper>
+    <>
+      <ErrorModal
+        show={errors.length > 0}
+        errorMessages={errors}
+        onClose={() => {
+          setShowError(false);
+          history.push('/');
+        }}
+      />
+      <Wrapper>
+        <h1>Scan Code</h1>
+        <Preview>
+          <QrReader
+            onScan={onScan}
+            onError={handleError}
+            style={previewStyle}
+            delay={1000}
+            onLoad={() => console.log('loaded')}
+          />
+        </Preview>
+        <div>
+          <h4>Make sure you are focusing on the entire QR code.</h4>
+        </div>
+      </Wrapper>
+    </>
   );
 }
 

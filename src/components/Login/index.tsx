@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import TextInput from "../ui/TextInput";
 import { observer } from "mobx-react";
+import Warning from "../ui/AlertWarning";
 
 const errorMessages = {
   invalid_emailOrPassword: "Problem logging in! Check your Email and Password",
@@ -28,6 +29,11 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [errors, setError] = useState<string[]>([]);
+
+  let location = useLocation();
+  // @ts-ignore
+  let { from } = location.state || { from: { pathname: "/" } };
 
   const handleInput = ({ target: { name, value } }: IForm) => {
     setUser({
@@ -39,10 +45,13 @@ const Login = () => {
   const loginUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await appService.login({ email: user.email, password: user.password });
+    await appService.login(
+      { email: user.email, password: user.password },
+      setError
+    );
 
     if (appService.isLogedin) {
-      history.push("/");
+      history.replace(from);
     }
   };
 
@@ -50,21 +59,7 @@ const Login = () => {
     <CardStyle>
       <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
       <H1Style>Login Here</H1Style>
-      <Warning>
-        {appService.errors.map((error) => {
-          const message = (errorMessages as any)[error];
-
-          return (
-            <>
-              {message && (
-                <Alert key={error} variant='danger'>
-                  {message}
-                </Alert>
-              )}
-            </>
-          );
-        })}
-      </Warning>
+      <Warning errors={errors} errorMessages={errorMessages} />
       <FormStyle>
         <TextInput
           key={1}
@@ -120,10 +115,6 @@ const CardStyle = styled(Card)`
   @media (max-width: 769px) {
     width: 100%;
   }
-`;
-
-const Warning = styled.div`
-  margin: 0 20px;
 `;
 
 const H1Style = styled.h1`

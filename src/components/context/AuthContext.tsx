@@ -9,6 +9,11 @@ const client = clientFactory(GRAPHQL_HOST, () => localStorage.getItem('session')
 const appService = new AppService(client);
 
 export const AuthContext = createContext({ appService });
+// restore session if there is a valid token in local storage
+if (localStorage.getItem('session')) {
+  appService.logginIn();
+  // appService.restoreSession();
+}
 
 export const AuthProvider = ({ children }: any) => {
   return (

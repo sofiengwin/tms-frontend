@@ -3,16 +3,16 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 interface Props {
-  errorMessage: string;
+  errorMessages: string[];
   onClose: () => void
-  isShown: boolean;
+  show: boolean;
 }
 
-const ErrorModal: React.FC<Props> = ({errorMessage, onClose, isShown}) => {
+const ErrorModal: React.FC<Props> = ({errorMessages, onClose, show}) => {
   return (
     <Modal
       size="sm"
-      show={isShown}
+      show={show}
       onHide={onClose}
       aria-labelledby="example-modal-sizes-title-sm"
     >
@@ -22,10 +22,12 @@ const ErrorModal: React.FC<Props> = ({errorMessage, onClose, isShown}) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {errorMessage}
+        {errorMessages.map((error, index) => (
+          <div key={index}>{error}</div>
+        ))}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => null}>
+        <Button variant="primary" onClick={onClose}>
           Home
         </Button>
       </Modal.Footer>
