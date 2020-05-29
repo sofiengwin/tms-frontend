@@ -29,7 +29,7 @@ function App() {
               <PrivateRoute exact path='/defaulter'>
                 <Defaulter />
               </PrivateRoute>
-              <PrivateRoute exact path='/profile'>
+              <PrivateRoute exact path='/drivers/:driverId'>
                 <Profile />
               </PrivateRoute>
               <Route exact path='/login'>
