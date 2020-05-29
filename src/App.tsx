@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { AuthProvider } from "./components/context/AuthContext";
 import PrivateRoute from "./PrivateRoute";
+import QrImages from "./components/QrImages";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute exact path='/defaulter'>
                 <Defaulter />
+              </PrivateRoute>
+              <PrivateRoute exact path='/qr'>
+                <QrImages />
               </PrivateRoute>
               <PrivateRoute exact path='/drivers/:driverId'>
                 <Profile />

@@ -24,30 +24,30 @@ const Profile: React.FC = () => {
           </Image>
         </Tab>
       </TabStyle>
-      <UnOrderList>
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Date Time</th>
-              <th>Amount</th>
-              {/* <th>Cashier</th> */}
-              <th>MOT Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array(5)
-              .fill("yes")
-              .map(({ y: string }) => (
-                <tr>
-                  <td>Table cell</td>
-                  <td>Table cell</td>
-                  {/* <td>Table cell</td> */}
-                  <td>Table cell</td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      </UnOrderList>
+      {/* <UnOrderList> */}
+      <Table responsive>
+        <thead>
+          <tr>
+            <th>Date Time</th>
+            <th>Amount</th>
+            {/* <th>Cashier</th> */}
+            <th>MOT Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array(5)
+            .fill("yes")
+            .map(({ y: string }) => (
+              <tr>
+                <td>Table cell</td>
+                <td>Table cell</td>
+                {/* <td>Table cell</td> */}
+                <td>Table cell</td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+      {/* </UnOrderList> */}
     </Container>
   );
 };

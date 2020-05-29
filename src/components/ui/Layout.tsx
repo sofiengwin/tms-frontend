@@ -4,7 +4,7 @@ import Header from "./Header";
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 50px 1fr;
+  /* grid-template-rows: 50px 1fr; */
   min-height: 100vh;
 `;
 
