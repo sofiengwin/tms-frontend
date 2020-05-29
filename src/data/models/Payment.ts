@@ -5,4 +5,5 @@ export interface IPayment {
   amount: string;
   cashier: IAdmin;
   driver: ICreateDriver;
+  createdAt: string;
 }

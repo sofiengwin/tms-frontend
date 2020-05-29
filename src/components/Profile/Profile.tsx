@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Table, Tabs, Tab } from "react-bootstrap";
 
 const Profile: React.FC = () => {
-  const [change, setChange] = useState({
-    first: true,
-    second: false,
-  });
+  const [change, setChange] = useState();
+
+  useEffect(() => {
+    const fetchProfile = () => {};
+
+    fetchProfile();
+  }, []);
   return (
     <Container>
       <TabStyle defaultActiveKey='profile'>
