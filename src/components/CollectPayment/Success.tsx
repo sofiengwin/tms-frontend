@@ -2,12 +2,20 @@ import * as React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const Success = () => {
+interface Props {
+  show: boolean;
+  onHide: () => void;
+  motNumber: string;
+  scanAnother: () => void;
+  backHome: () => void;
+}
+
+const Success: React.FC<Props> = ({show, onHide, motNumber, scanAnother, backHome}) => {
   return (
     <Modal
       size="sm"
-      show={true}
-      onHide={() => null}
+      show={show}
+      onHide={onHide}
       aria-labelledby="example-modal-sizes-title-sm"
     >
       <Modal.Header closeButton>
@@ -16,13 +24,13 @@ const Success = () => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Payment successfully recorded for MOT 3910
+        Payment successfully recorded for MOT {motNumber}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => null}>
+        <Button variant="secondary" onClick={scanAnother}>
           Scan Another
         </Button>
-        <Button variant="primary" onClick={() => null}>
+        <Button variant="primary" onClick={backHome}>
           Home
         </Button>
       </Modal.Footer>

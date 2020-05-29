@@ -1,12 +1,13 @@
 import {observable, action} from 'mobx';
 import { FetchQl } from "../lib/client";
-import collectPaymentCall, {
-  ICollectPayment,
-} from "../data/graphql/collectPayment";
+import recordPaymentCall, {
+  IRecordPayment,
+} from "../data/graphql/recordPayment";
 import loginCall from '../data/graphql/login';
 import {IAdmin} from '../data/models/Admin';
 import meCall from '../data/graphql/me';
-
+import createDriverCall from '../data/graphql/createDriver';
+import { ICreateDriver } from '../data/models/Driver';
 
 export default class AppService {
   client: FetchQl;
@@ -19,8 +20,16 @@ export default class AppService {
     this.client = client;
   }
 
-  collectPayment = async (data: ICollectPayment) => {
-    await collectPaymentCall(this.client, data);
+  recordPayment = async (data: IRecordPayment, handleError: (errors: string[]) => void) => {
+    this.isLoading = true;
+    const {payment, errors} = await recordPaymentCall(this.client, data);
+
+    this.isLoading = false;
+    if (payment) {
+      return payment;
+    } else if (errors) {
+      handleError(errors)
+    }
   };
 
   @action
@@ -33,14 +42,17 @@ export default class AppService {
       this.admin = admin;
       localStorage.setItem('session', accessToken)
     } else if (errors) {
-      const e = errors.map(({code, field}: any) => `${code}_${field}`);
-      handleError(e);
+      handleError(errors.map(({code, field}: any) => `${code}_${field}`));
     }
     this.isLoading = false;
   };
 
   @action
   async restoreSession() {
+    if (this.admin) {
+      return;
+    }
+
     this.isLoading = true;
 
     const {admin} = await meCall(this.client);
@@ -55,5 +67,20 @@ export default class AppService {
   @action
   logginIn() {
     this.isLogedin = true;
+  }
+
+  @action
+  async createDriver(data: ICreateDriver, handleError: (errors: string[]) => void) {
+    this.isLoading = true;
+    const {driver, errors} = await createDriverCall(this.client, data)
+    console.log({driver, errors})
+    this.isLoading = false;
+
+    if (driver) {
+      return driver;
+    } else {
+      handleError(errors.map(({code, field}: any) => `${code}_${field}`))
+    }
+
   }
 }
