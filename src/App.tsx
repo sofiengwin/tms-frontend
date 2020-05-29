@@ -11,14 +11,14 @@ import CollectPayment from "./components/CollectPayment";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { AuthProvider } from "./components/context/AuthContext";
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <Layout>
-          <Router>
+        <Router>
+          <Layout>
             <Switch>
               <PrivateRoute exact path='/'>
                 <Home />
@@ -42,8 +42,8 @@ function App() {
                 <CollectPayment />
               </PrivateRoute>
             </Switch>
-          </Router>
-        </Layout>
+          </Layout>
+        </Router>
       </ThemeProvider>
     </AuthProvider>
   );
