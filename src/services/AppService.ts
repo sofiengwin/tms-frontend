@@ -9,6 +9,7 @@ import meCall from '../data/graphql/me';
 import createDriverCall from '../data/graphql/createDriver';
 import { ICreateDriver } from '../data/models/Driver';
 import fetchPaymentsCall from '../data/graphql/fetchPayments';
+import fetchDriverCall from '../data/graphql/fetchDriver';
 
 export default class AppService {
   client: FetchQl;
@@ -90,6 +91,15 @@ export default class AppService {
     const payments = await fetchPaymentsCall(this.client);
     this.isLoading = false;
 
-    return payments
+    return payments;
+  }
+
+  @action
+  async fetchDriver(driverId: number) {
+    this.isLoading = true;
+    const driver = await fetchDriverCall(this.client, driverId)
+    this.isLoading = false;
+
+    return driver;
   }
 }
