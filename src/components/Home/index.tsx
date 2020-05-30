@@ -11,16 +11,6 @@ const Home: React.FC = () => {
           Collect Payment
         </Link>
       </Button>
-      <Button variant='primary' size='lg' block>
-        <Link to='report' style={{ color: "white" }}>
-          New Report
-        </Link>
-      </Button>
-      <Button variant='primary' size='lg' block>
-        <Link to='defaulter' style={{ color: "white" }}>
-          Defaulter Report
-        </Link>
-      </Button>
     </Container>
   );
 };

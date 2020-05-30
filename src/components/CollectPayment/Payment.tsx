@@ -1,34 +1,37 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import {Button} from 'react-bootstrap'
-import { observer } from 'mobx-react';
-import { AuthContext } from '../context/AuthContext';
-import Success from './Success';
-import { useHistory } from 'react-router-dom';
-import ErrorModal from '../ui/ErrorModal';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { Button } from "react-bootstrap";
+import { observer } from "mobx-react";
+import { AuthContext } from "../context/AuthContext";
+import Success from "./Success";
+import { useHistory } from "react-router-dom";
+import ErrorModal from "../ui/ErrorModal";
 
 interface Props {
   data: string;
   scanAnother: () => void;
 }
 
-const Payment: React.FC<Props> = ({data, scanAnother}) => {
-  const {appService} = useContext(AuthContext);
-  const [success, setSuccess] = React.useState(false)
-  const [errors, setErrors] = React.useState<string[]>([])
+const Payment: React.FC<Props> = ({ data, scanAnother }) => {
+  const { appService } = useContext(AuthContext);
+  const [success, setSuccess] = React.useState(false);
+  const [errors, setErrors] = React.useState<string[]>([]);
 
-  const history = useHistory()
+  const history = useHistory();
 
-  const [driverId, motNumber] = data.split('::');
+  const [driverId, motNumber] = data.split("::");
 
   const recordPayment = async () => {
-    console.log({appService})
-    const payment = await appService.recordPayment({amount: 250, driverId: Number(32444344333434), cashierId: 1}, setErrors);
-    console.log({driverId, motNumber, data})
+    console.log({ appService });
+    const payment = await appService.recordPayment(
+      { amount: 250, driverId: Number(driverId), cashierId: 1 },
+      setErrors
+    );
+    console.log({ driverId, motNumber, data });
     if (payment) {
       setSuccess(true);
     }
-  }
+  };
 
   return (
     <>
@@ -36,10 +39,10 @@ const Payment: React.FC<Props> = ({data, scanAnother}) => {
         show={success}
         motNumber={motNumber}
         scanAnother={scanAnother}
-        backHome={() => history.push('/')}
+        backHome={() => history.push("/")}
         onHide={() => {
           setSuccess(false);
-          history.push('/');
+          history.push("/");
         }}
       />
       <ErrorModal
@@ -47,22 +50,22 @@ const Payment: React.FC<Props> = ({data, scanAnother}) => {
         errorMessages={errors}
         onClose={() => {
           setErrors([]);
-          history.push('/');
+          history.push("/");
         }}
       />
       <Center>
         <h4>Collect payment for MOT {data}</h4>
         <Button
-          variant="primary"
+          variant='primary'
           onClick={recordPayment}
           disabled={appService.isLoading}
         >
-          { appService.isLoading ? 'Loading' : 'Record Payment'}
+          {appService.isLoading ? "Loading" : "Record Payment"}
         </Button>
       </Center>
     </>
-  )
-}
+  );
+};
 
 export default observer(Payment);
 
@@ -70,4 +73,7 @@ const Center = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
 `;
