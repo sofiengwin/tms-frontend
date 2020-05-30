@@ -1,54 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Table, Tabs, Tab } from "react-bootstrap";
+import { Table, Tabs, Tab, ListGroup } from "react-bootstrap";
+import {IPayment} from '../../data/models/Payment'
 
-const Profile: React.FC = () => {
-  const [change, setChange] = useState();
+interface Props {
+  driver: any;
+}
 
-  useEffect(() => {
-    const fetchProfile = () => {};
+const Profile: React.FC<Props> = ({driver}) => {
+  console.log({driver}, 'profile')
+  const payments = driver.payments || [];
 
-    fetchProfile();
-  }, []);
   return (
-    <Container>
-      <TabStyle defaultActiveKey='profile'>
-        <Tab eventKey='home' title='QR'>
-          <Image>
-            <div className='first'></div>
-          </Image>
-        </Tab>
-        <Tab eventKey='profile' title='Image'>
-          <Image>
-            <div className='second'></div>
-          </Image>
-        </Tab>
-      </TabStyle>
-      <UnOrderList>
+    <>
+      <Container>
+        <TabStyle defaultActiveKey='profile'>
+          <Tab eventKey='home' title='QR'>
+            <Image>
+              <img src={driver.qrCode} alt="QR CODE"/>
+            </Image>
+          </Tab>
+          <Tab eventKey='profile' title='Image'>
+            <Image>
+              <div className='second'></div>
+            </Image>
+          </Tab>
+        </TabStyle>
+        <ListGroup style={{marginBottom: '20px'}}>
+          <ListGroup.Item>Name: {driver.name}</ListGroup.Item>
+          <ListGroup.Item>Phone Number: {driver.phoneNumber}</ListGroup.Item>
+          <ListGroup.Item>MOT Number: {driver.motNumber}</ListGroup.Item>
+          <ListGroup.Item>Address: {driver.address}</ListGroup.Item>
+          <ListGroup.Item>State: {driver.state}</ListGroup.Item>
+          <ListGroup.Item>Hometown: {driver.hometown}</ListGroup.Item>
+          <ListGroup.Item>Area Of Operation: {driver.areaOfOperation}</ListGroup.Item>
+        </ListGroup>
         <Table responsive>
           <thead>
             <tr>
               <th>Date Time</th>
               <th>Amount</th>
-              {/* <th>Cashier</th> */}
-              <th>MOT Number</th>
+              <th>Cashier</th>
             </tr>
           </thead>
           <tbody>
-            {Array(5)
-              .fill("yes")
-              .map(({ y: string }) => (
-                <tr>
-                  <td>Table cell</td>
-                  <td>Table cell</td>
-                  {/* <td>Table cell</td> */}
-                  <td>Table cell</td>
+            {payments.map(({createdAt, amount, cashier}: IPayment, index: number) => (
+                <tr key={index}>
+                  <td>{createdAt}</td>
+                  <td>{amount}</td>
+                   <td>{cashier.name}</td>
                 </tr>
               ))}
           </tbody>
         </Table>
-      </UnOrderList>
-    </Container>
+      </Container>
+    </>
   );
 };
 
@@ -82,32 +88,7 @@ export const Li = styled.li`
   padding: 1em 0;
   cursor: pointer;
 `;
-export const UnOrderList = styled.ul`
-  list-style: none;
-`;
-export const List = styled.li`
-  width: 90%;
-  margin: auto;
-  background: rgba(2, 2, 2, 0.5);
-  padding: 1em 2em;
-  margin-bottom: 1em;
-  color: white;
-  border-radius: 0.25em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  @media (max-width: 769px) {
-    width: 100%;
-  }
-
-  p {
-    width: 5em;
-    height: 2em;
-    border-radius: 0.3rem;
-    background: ${(props) => (props.color ? props.color : "")};
-  }
-`;
 export const Image = styled.div`
   padding: 2em 0;
   .first {

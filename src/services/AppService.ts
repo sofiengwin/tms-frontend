@@ -3,12 +3,13 @@ import { FetchQl } from "../lib/client";
 import recordPaymentCall, {
   IRecordPayment,
 } from "../data/graphql/recordPayment";
-import loginCall from "../data/graphql/login";
-import { IAdmin } from "../data/models/Admin";
-import meCall from "../data/graphql/me";
-import createDriverCall from "../data/graphql/createDriver";
-import { ICreateDriver } from "../data/models/Driver";
-import fetchPaymentsCall from "../data/graphql/fetchPayments";
+import loginCall from '../data/graphql/login';
+import {IAdmin} from '../data/models/Admin';
+import meCall from '../data/graphql/me';
+import createDriverCall from '../data/graphql/createDriver';
+import { ICreateDriver } from '../data/models/Driver';
+import fetchPaymentsCall from '../data/graphql/fetchPayments';
+import fetchDriverCall from '../data/graphql/fetchDriver';
 
 export default class AppService {
   client: FetchQl;
@@ -103,5 +104,14 @@ export default class AppService {
     this.isLoading = false;
 
     return payments;
+  }
+
+  @action
+  async fetchDriver(driverId: number) {
+    this.isLoading = true;
+    const driver = await fetchDriverCall(this.client, driverId)
+    this.isLoading = false;
+
+    return driver;
   }
 }
