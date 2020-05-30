@@ -22,12 +22,11 @@ const Payment: React.FC<Props> = ({ data, scanAnother }) => {
   const [driverId, motNumber] = data.split("::");
 
   const recordPayment = async () => {
-    console.log({ appService });
     const payment = await appService.recordPayment(
       { amount: 250, driverId: Number(driverId), cashierId: 1 },
       setErrors
     );
-    console.log({ driverId, motNumber, data });
+
     if (payment) {
       setSuccess(true);
     }
