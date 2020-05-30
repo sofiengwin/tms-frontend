@@ -5,7 +5,7 @@ import { observer } from "mobx-react";
 import { AuthContext } from "../context/AuthContext";
 import Success from "./Success";
 import { useHistory } from "react-router-dom";
-import ErrorModal from "./Error";
+import ErrorModal from "../ui/ErrorModal";
 
 interface Props {
   data: string;

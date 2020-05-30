@@ -6,7 +6,7 @@ import Layout from "./components/ui/Layout";
 import Home from "./components/Home";
 import Report from "./components/Report";
 import Defaulter from "./components/DefaulterReport";
-import Profile from "./components/Profile/Profile";
+import Profile from "./components/Profile";
 import CollectPayment from "./components/CollectPayment";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -28,7 +28,7 @@ function App() {
               <PrivateRoute exact path='/report'>
                 <Report />
               </PrivateRoute>
-              <PrivateRoute exact path='/defaulter'>
+              <PrivateRoute exact path='/defaulters'>
                 <Defaulter />
               </PrivateRoute>
               <PrivateRoute exact path='/qr'>

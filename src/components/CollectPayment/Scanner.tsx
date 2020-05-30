@@ -2,7 +2,7 @@
 import React from 'react';
 import QrReader from 'react-qr-scanner';
 import styled from 'styled-components';
-import ErrorModal from './Error';
+import ErrorModal from '../ui/ErrorModal';
 import { useHistory } from 'react-router-dom';
 
 const Preview = styled.div`
