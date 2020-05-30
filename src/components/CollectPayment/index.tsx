@@ -6,7 +6,6 @@ const CollectPayment = () => {
   const [data, setData] = React.useState("1::1");
 
   const onScan = (data: string) => {
-    console.log({ data });
     if (data) {
       setData(data);
     }
