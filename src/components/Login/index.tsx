@@ -3,42 +3,52 @@ import { Form, Button, Card } from "react-bootstrap";
 import styled from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import TextInput from '../ui/TextInput';
-import {observer} from 'mobx-react';
-import Warning from '../ui/AlertWarning';
+import TextInput from "../ui/TextInput";
+import { observer } from "mobx-react";
+import Warning from "../ui/AlertWarning";
 
 const errorMessages = {
-  invalid_emailOrPassword: 'Problem logging in! Check your Email and Password'
-}
+  invalid_emailOrPassword: "Problem logging in! Check your Email and Password",
+};
 interface ILogin {
   email: string;
   password: string;
 }
 
+interface IForm {
+  target: {
+    name: string;
+    value: string;
+  };
+}
+
 const Login = () => {
-  const {appService} = useContext(AuthContext);
+  const { appService } = useContext(AuthContext);
   const history = useHistory();
   const [user, setUser] = useState<ILogin>({
     email: "",
     password: "",
   });
-  const [errors, setError] = useState<string[]>([])
+  const [errors, setError] = useState<string[]>([]);
 
   let location = useLocation();
   // @ts-ignore
   let { from } = location.state || { from: { pathname: "/" } };
 
-  const handleInput = ({ target: { name, value } }: any) => {
+  const handleInput = ({ target: { name, value } }: IForm) => {
     setUser({
       ...user,
       [name]: value,
     });
   };
 
-  const loginUser = async (e: any) => {
+  const loginUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await appService.login({ email: user.email, password: user.password }, setError);
+    await appService.login(
+      { email: user.email, password: user.password },
+      setError
+    );
 
     if (appService.isLogedin) {
       history.replace(from);
@@ -53,8 +63,8 @@ const Login = () => {
       <FormStyle>
         <TextInput
           key={1}
-          label="Email address"
-          type="email"
+          label='Email address'
+          type='email'
           value={user.email}
           placeholder='Email Address'
           name='email'
@@ -64,8 +74,8 @@ const Login = () => {
 
         <TextInput
           key={2}
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           value={user.password}
           placeholder='Password'
           name='password'
@@ -73,7 +83,13 @@ const Login = () => {
           error={undefined}
         />
 
-        <ButtonStyle variant='success' type='submit' onClick={loginUser} loading={appService.isLoading} disabled={appService.isLoading}>
+        <ButtonStyle
+          variant='success'
+          type='submit'
+          onClick={loginUser}
+          loading={appService.isLoading}
+          disabled={appService.isLoading}
+        >
           <IStyle
             size='1'
             color='white'

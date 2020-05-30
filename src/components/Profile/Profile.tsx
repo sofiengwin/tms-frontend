@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Table, Tabs, Tab, ListGroup } from "react-bootstrap";
-import {DriverType} from '../../data/graphql/fetchDriver';
 import {IPayment} from '../../data/models/Payment'
 
 interface Props {
@@ -18,7 +17,7 @@ const Profile: React.FC<Props> = ({driver}) => {
         <TabStyle defaultActiveKey='profile'>
           <Tab eventKey='home' title='QR'>
             <Image>
-              <img src={driver.qrCode} />
+              <img src={driver.qrCode} alt="QR CODE"/>
             </Image>
           </Tab>
           <Tab eventKey='profile' title='Image'>
@@ -89,32 +88,7 @@ export const Li = styled.li`
   padding: 1em 0;
   cursor: pointer;
 `;
-// export const UnOrderList = styled.ul`
-//   list-style: none;
-// `;
-// export const List = styled.li`
-//   width: 90%;
-//   margin: auto;
-//   background: rgba(2, 2, 2, 0.5);
-//   padding: 1em 2em;
-//   margin-bottom: 1em;
-//   color: white;
-//   border-radius: 0.25em;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
 
-//   @media (max-width: 769px) {
-//     width: 100%;
-//   }
-
-//   p {
-//     width: 5em;
-//     height: 2em;
-//     border-radius: 0.3rem;
-//     background: ${(props) => (props.color ? props.color : "")};
-//   }
-// `;
 export const Image = styled.div`
   padding: 2em 0;
   .first {

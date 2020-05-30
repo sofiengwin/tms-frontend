@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx';
+import { observable, action } from "mobx";
 import { FetchQl } from "../lib/client";
 import recordPaymentCall, {
   IRecordPayment,
@@ -14,7 +14,7 @@ import fetchDriverCall from '../data/graphql/fetchDriver';
 export default class AppService {
   client: FetchQl;
   @observable isLogedin: boolean = false;
-  @observable isLoading: boolean = false
+  @observable isLoading: boolean = false;
   admin: IAdmin | null = null;
   errors = observable.array<string>([]);
 
@@ -22,32 +22,41 @@ export default class AppService {
     this.client = client;
   }
 
-  recordPayment = async (data: IRecordPayment, handleError: (errors: string[]) => void) => {
+  recordPayment = async (
+    data: IRecordPayment,
+    handleError: (errors: string[]) => void
+  ) => {
     this.isLoading = true;
-    const {payment, errors} = await recordPaymentCall(this.client, data);
+    const { payment, errors } = await recordPaymentCall(this.client, data);
 
     this.isLoading = false;
     if (payment) {
       return payment;
     } else if (errors) {
-      handleError(errors)
+      handleError(errors);
     }
   };
 
   @action
-  async login ({ email, password }: { email: string; password: string }, handleError: (errors: string[]) => void) {
+  async login(
+    { email, password }: { email: string; password: string },
+    handleError: (errors: string[]) => void
+  ) {
     this.isLoading = true;
-    const {admin, hhh: accessToken, errors} = await loginCall(this.client, {email, password})
-    
+    const { admin, hhh: accessToken, errors } = await loginCall(this.client, {
+      email,
+      password,
+    });
+
     if (admin && accessToken) {
       this.isLogedin = true;
       this.admin = admin;
-      localStorage.setItem('session', accessToken)
+      localStorage.setItem("session", accessToken);
     } else if (errors) {
-      handleError(errors.map(({code, field}: any) => `${code}_${field}`));
+      handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
     }
     this.isLoading = false;
-  };
+  }
 
   @action
   async restoreSession() {
@@ -57,7 +66,7 @@ export default class AppService {
 
     this.isLoading = true;
 
-    const {admin} = await meCall(this.client);
+    const { admin } = await meCall(this.client);
 
     if (admin) {
       this.admin = admin;
@@ -72,16 +81,19 @@ export default class AppService {
   }
 
   @action
-  async createDriver(data: ICreateDriver, handleError: (errors: string[]) => void) {
+  async createDriver(
+    data: ICreateDriver,
+    handleError: (errors: string[]) => void
+  ) {
     this.isLoading = true;
-    const {driver, errors} = await createDriverCall(this.client, data)
-    console.log({driver, errors})
+    const { driver, errors } = await createDriverCall(this.client, data);
+    console.log({ driver, errors });
     this.isLoading = false;
 
     if (driver) {
       return driver;
     } else {
-      handleError(errors.map(({code, field}: any) => `${code}_${field}`))
+      handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
     }
   }
 
