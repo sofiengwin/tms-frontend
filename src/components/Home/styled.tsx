@@ -6,6 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 90vh;
 `;
 export const Button = styled.button`
   padding: 1.5em;

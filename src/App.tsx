@@ -1,5 +1,10 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import theme from "./components/styled/theme";
 import Layout from "./components/ui/Layout";
@@ -13,6 +18,7 @@ import Register from "./components/Register";
 import { AuthProvider } from "./components/context/AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import QrImages from "./components/QrImages";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
@@ -45,6 +51,10 @@ function App() {
               <PrivateRoute exact path='/collect-payment'>
                 <CollectPayment />
               </PrivateRoute>
+              <Route path='/notfound'>
+                <PageNotFound />
+              </Route>
+              <Redirect to='/notfound' />
             </Switch>
           </Layout>
         </Router>

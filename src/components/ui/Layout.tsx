@@ -2,17 +2,13 @@ import * as React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 
-const Container = styled.div`
-  display: grid;
-  /* grid-template-rows: 50px 1fr; */
-  min-height: 100vh;
-`;
+const Container = styled.div``;
 
 const MainContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  padding-top: 5%;
 `;
 
 interface Props {
