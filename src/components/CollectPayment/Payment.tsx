@@ -23,7 +23,7 @@ const Payment: React.FC<Props> = ({data, scanAnother}) => {
 
   const recordPayment = async () => {
     console.log({appService})
-    const payment = await appService.recordPayment({amount: 250, driverId: Number(32444344333434), cashierId: 1}, setErrors);
+    const payment = await appService.recordPayment({amount: 250, driverId: Number(driverId), cashierId: 1}, setErrors);
     console.log({driverId, motNumber, data})
     if (payment) {
       setSuccess(true);

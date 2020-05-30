@@ -10,6 +10,7 @@ import createDriverCall from '../data/graphql/createDriver';
 import { ICreateDriver } from '../data/models/Driver';
 import fetchPaymentsCall from '../data/graphql/fetchPayments';
 import fetchDriverCall from '../data/graphql/fetchDriver';
+import fetchDefaultersCall from '../data/graphql/fetchDefaulters';
 
 export default class AppService {
   client: FetchQl;
@@ -113,5 +114,14 @@ export default class AppService {
     this.isLoading = false;
 
     return driver;
+  }
+
+  @action
+  async fetchDefaulters(){
+    this.isLoading = true;
+    const defaulters = await fetchDefaultersCall(this.client);
+    this.isLoading = false;
+
+    return defaulters;
   }
 }
