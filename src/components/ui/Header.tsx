@@ -1,19 +1,27 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Navbar, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 
 const Header: React.FC = () => {
   const history = useHistory();
   return (
     <NavStyle bg='light' expand='lg' sticky='top'>
-      <Navbar.Brand href='#home'>TMS</Navbar.Brand>
+      <Navbar.Brand href='#home'>
+        <Label onClick={() => history.goBack()}>Back</Label>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
           <StyleLink to='/report'>Reports</StyleLink>
           <StyleLink to='/defaulter'>Defaulter Report</StyleLink>
-          <Label onClick={() => history.goBack()}>Back</Label>
         </Nav>
       </Navbar.Collapse>
     </NavStyle>
@@ -22,16 +30,7 @@ const Header: React.FC = () => {
 
 export default Header;
 
-const NavStyle = styled(Navbar)`
-  z-index: 10;
-
-  #basic-navbar-nav {
-    background-color: whitesmoke !important;
-    padding: 1em;
-    width: 110%;
-    margin: 0 !important;
-  }
-`;
+const NavStyle = styled(Navbar)``;
 
 const StyleLink = styled(Link)`
   color: #888;
@@ -46,5 +45,4 @@ const StyleLink = styled(Link)`
 
 const Label = styled.label`
   color: #888;
-  padding: 1em 0;
 `;
