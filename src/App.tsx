@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import theme from "./components/styled/theme";
 import Layout from "./components/ui/Layout";
@@ -51,10 +46,9 @@ function App() {
               <PrivateRoute exact path='/collect-payment'>
                 <CollectPayment />
               </PrivateRoute>
-              <Route path='/notfound'>
+              <Route path='*'>
                 <PageNotFound />
               </Route>
-              <Redirect to='/notfound' />
             </Switch>
           </Layout>
         </Router>
