@@ -1,32 +1,27 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext, useState, useEffect } from "react";
+import Codes from './Codes';
+import { AuthContext } from "../context/AuthContext";
+import { ICreateDriver } from "../../data/models/Driver";
+import Spinner from '../ui/Spinner';
 
 const QrImages = () => {
+  const {appService} = useContext(AuthContext);
+  const [drivers, setDrivers] = useState<ICreateDriver[]>([]);
+
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      const drvs = await appService.fetchDrivers();
+      setDrivers(drvs)
+    }
+
+    fetchDrivers();
+  }, []);
+
   return (
-    <Container>
-      {Array(6)
-        .fill("https://sofien-pizzas.s3.amazonaws.com/17-qr-code.png")
-        .map((image: string) => (
-          <Image>
-            <img src={image} />
-          </Image>
-        ))}
-    </Container>
+    <>
+      {appService.isLoading ? <Spinner /> : <Codes drivers={drivers} />}
+    </>
   );
 };
 
 export default QrImages;
-
-const Container = styled.div`
-  padding: 2% 10%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1em;
-`;
-const Image = styled.div`
-  width: 100%;
-
-  img {
-    width: 100%;
-  }
-`;
