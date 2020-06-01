@@ -18,10 +18,10 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <ErrorBoundary>
+    <ErrorBoundary>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <Router>
             <Layout>
               <Switch>
                 <PrivateRoute exact path='/'>
@@ -53,10 +53,10 @@ function App() {
                 </Route>
               </Switch>
             </Layout>
-          </ErrorBoundary>
-        </Router>
-      </ThemeProvider>
-    </AuthProvider>
+          </Router>
+        </ThemeProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
