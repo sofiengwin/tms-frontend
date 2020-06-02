@@ -9,8 +9,8 @@ interface Props {
 const QrImages: React.FC<Props> = ({drivers}) => {
   return (
     <Container>
-      {drivers.map(({qrCode}) => (
-          <Image>
+      {drivers.map(({qrCode}, index) => (
+          <Image key={index}>
             <img src={qrCode} alt="QR Code For User"/>
           </Image>
         ))}

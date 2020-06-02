@@ -1,21 +1,24 @@
 import React from "react";
-
-export default class MyErrorBoundary extends React.Component {
-  state = {
-    errorMessage: "",
-  };
-  static getDerivedStateFromError(error: Error) {
-    return { errorMessage: error.toString() };
-  }
-  componentDidCatch(error: Error, info: any) {
-    this.logErrorToServices(error.toString(), info.componentStack);
-  }
-  // A fake logging service 😬
-  logErrorToServices = console.log;
-  render() {
-    if (this.state.errorMessage) {
-      return <p>{this.state.errorMessage}</p>;
-    }
-    return this.props.children;
-  }
+import {Center} from '../ui/Center';
+import { Redirect, Link, useHistory } from "react-router-dom";
+interface Props {
+  error: AppErrorType;
+  children?: any;
 }
+
+const MyErrorBoundary: React.FC<Props> = ({error, children}) => {
+  const history = useHistory()
+  console.log(error, 'ErrorBoundary')
+  if (error === 'Unauthorized') {
+    return <Center>Internal server error. Bibi fucked up, call him now <button onClick={() => history.push('/login')}>Login</button></Center>
+  } else if (error === 'INTERNAL_SERVER_ERROR') {
+    return <Redirect to="/login" />;
+  }
+
+  
+  return (
+    children
+  );
+}
+
+export default MyErrorBoundary

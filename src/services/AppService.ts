@@ -17,6 +17,7 @@ export default class AppService {
   client: FetchQl;
   @observable isLogedin: boolean = false;
   @observable isLoading: boolean = false;
+  errorHandler!: (error: AppErrorType) => void;
   admin: IAdmin | null = null;
   errors = observable.array<string>([]);
 
@@ -128,10 +129,20 @@ export default class AppService {
 
   @action
   async fetchDrivers(){
-    this.isLoading = true;
-    const drivers = await fetchDriversCall(this.client);
     this.isLoading = false;
+    try {
+      const drivers = await fetchDriversCall(this.client);
+      
+      this.isLoading = false;
+      return drivers;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message)
+      console.log({error}, 'fetchDriver', error.message, error.name)
+    }
+  }
 
-    return drivers;
+  addErrorHandler(errorHandler: (error: AppErrorType) => void) {
+    this.errorHandler = errorHandler;
   }
 }

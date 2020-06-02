@@ -10,8 +10,11 @@ const QrImages = () => {
 
   useEffect(() => {
     const fetchDrivers = async () => {
-      const drvs = await appService.fetchDrivers();
-      setDrivers(drvs)
+        const drvs = await appService.fetchDrivers();
+
+        if (drvs) {
+          setDrivers(drvs)
+        }
     }
 
     fetchDrivers();
