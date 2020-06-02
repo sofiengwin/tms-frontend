@@ -14,6 +14,8 @@ const ToastMessage: React.FC<Props> = ({show, onClose, variant, message, title})
     <Toast
       show={show}
       onClose={onClose}
+      delay={3000}
+      autohide
       style={{
         position: 'absolute',
         top: '50%',

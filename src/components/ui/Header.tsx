@@ -3,10 +3,6 @@ import styled from "styled-components";
 import {
   Navbar,
   Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 
@@ -21,6 +17,7 @@ const Header: React.FC = () => {
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
           <StyleLink to='/'>Home</StyleLink>
+          <StyleLink to='/register'>Add Driver</StyleLink>
           <StyleLink to='/report'>Reports</StyleLink>
           <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
           <StyleLink to='/qr'>QR Codes</StyleLink>

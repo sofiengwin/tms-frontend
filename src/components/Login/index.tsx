@@ -54,7 +54,7 @@ const Login = () => {
       history.replace(from);
     }
   };
-
+  console.log({errors})
   return (
     <CardStyle>
       <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
