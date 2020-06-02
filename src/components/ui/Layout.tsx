@@ -7,8 +7,8 @@ const Container = styled.div``;
 const MainContent = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   padding-top: 5%;
+  margin: 0;
 `;
 
 interface Props {
