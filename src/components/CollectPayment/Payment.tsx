@@ -22,13 +22,17 @@ const Payment: React.FC<Props> = ({ data, scanAnother }) => {
   const [driverId, motNumber] = data.split("::");
 
   const recordPayment = async () => {
-    const payment = await appService.recordPayment(
-      { amount: 250, driverId: Number(driverId), cashierId: 1 },
-      setErrors
-    );
-
-    if (payment) {
-      setSuccess(true);
+    if (appService.admin) { 
+      const payment = await appService.recordPayment(
+        { amount: 250, driverId: Number(driverId), cashierId: appService.admin.id},
+        setErrors
+      );
+  
+      if (payment) {
+        setSuccess(true);
+      }
+    } else {
+      throw new Error("Unauthorized")
     }
   };
 
@@ -53,7 +57,7 @@ const Payment: React.FC<Props> = ({ data, scanAnother }) => {
         }}
       />
       <Center>
-        <h4>Collect payment for MOT {data}</h4>
+        <h4>Collect payment for MOT {motNumber}</h4>
         <Button
           variant='primary'
           onClick={recordPayment}
