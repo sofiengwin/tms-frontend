@@ -1,6 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Navbar, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+} from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {
@@ -17,11 +20,12 @@ const Header: React.FC = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav className='ml-auto'>
+        <Nav className='mr-auto'>
           <StyleLink to='/'>Home</StyleLink>
+          <StyleLink to='/register'>Add Driver</StyleLink>
           <StyleLink to='/report'>Reports</StyleLink>
           <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
-          <StyleLink to='/qr'>QR CODE</StyleLink>
+          <StyleLink to='/qr'>QR Codes</StyleLink>
         </Nav>
       </Navbar.Collapse>
     </NavStyle>
