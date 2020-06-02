@@ -12,4 +12,4 @@ interface JSONSerializableObject {
 
 interface JSONSerializableArray extends Array<JSONSerializable> {}
 
-type AppErrorType = 'Unauthorized' | 'INTERNAL_SERVER_ERROR' | null;
+type AppErrorType = 'Unauthorized' | 'INTERNAL_SERVER_ERROR' | 'Failed to fetch' | null;

@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {Center} from '../ui/Center';
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 interface Props {
-  error: AppErrorType;
   children?: any;
 }
 
-const MyErrorBoundary: React.FC<Props> = ({error, children}) => {
+const MyErrorBoundary: React.FC<Props> = ({children}) => {
   const history = useHistory()
-  console.log(error, 'ErrorBoundary')
-  if (error === 'Unauthorized') {
-    return <Center>Internal server error. Bibi fucked up, call him now <button onClick={() => history.push('/login')}>Login</button></Center>
-  } else if (error === 'INTERNAL_SERVER_ERROR') {
+  const [appError, setAppError] = useState<AppErrorType>(null);
+  const {appService} = useContext(AuthContext);
+
+  useEffect(() => {
+    appService.addErrorHandler(setAppError);
+  }, [])
+  
+  console.log(appError, 'ErrorBoundary')
+  if (appError === 'Unauthorized') {
     return <Redirect to="/login" />;
+  } else if (appError === 'INTERNAL_SERVER_ERROR') {
+    return <Center>Internal server appError. Bibi fucked up, call him now <button onClick={() => history.push('/login')}>Login</button></Center>
   }
 
   

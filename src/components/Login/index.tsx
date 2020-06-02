@@ -87,15 +87,9 @@ const Login = () => {
           variant='success'
           type='submit'
           onClick={loginUser}
-          loading={appService.isLoading}
           disabled={appService.isLoading}
         >
-          <IStyle
-            size='1'
-            color='white'
-            className='fas fa-sign-in-alt'
-          ></IStyle>{" "}
-          Login
+          {appService.isLoading ? "Loading" : "Login"}
         </ButtonStyle>
       </FormStyle>
     </CardStyle>

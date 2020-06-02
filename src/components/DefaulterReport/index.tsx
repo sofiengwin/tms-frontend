@@ -16,7 +16,10 @@ const DefaultReport: React.FC = () => {
       const dfts = await appService.fetchDefaulters()
 
       console.log({dfts});
-      setDefaulters(dfts);
+
+      if (dfts) {
+        setDefaulters(dfts);
+      }
     }
 
     fetchDefaulters();

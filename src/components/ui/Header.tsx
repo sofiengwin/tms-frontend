@@ -20,8 +20,10 @@ const Header: React.FC = () => {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
+          <StyleLink to='/'>Home</StyleLink>
           <StyleLink to='/report'>Reports</StyleLink>
-          <StyleLink to='/defaulter'>Defaulter Report</StyleLink>
+          <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
+          <StyleLink to='/qr'>QR Codes</StyleLink>
         </Nav>
       </Navbar.Collapse>
     </NavStyle>

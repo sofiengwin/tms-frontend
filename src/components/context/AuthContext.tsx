@@ -12,7 +12,7 @@ export const AuthContext = createContext({ appService });
 // restore session if there is a valid token in local storage
 if (localStorage.getItem('session')) {
   appService.logginIn();
-  // appService.restoreSession();
+  appService.restoreSession();
 }
 
 export const AuthProvider = ({ children }: any) => {

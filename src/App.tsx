@@ -21,39 +21,53 @@ function App() {
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <Router>
-          <ErrorBoundary>
-            <Layout>
-              <Switch>
-                <PrivateRoute exact path='/'>
+          <Layout>
+            <Switch>
+              <PrivateRoute exact path='/'>
+                <ErrorBoundary>
                   <Home />
-                </PrivateRoute>
-                <PrivateRoute exact path='/report'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/report'>
+                <ErrorBoundary>
                   <Report />
-                </PrivateRoute>
-                <PrivateRoute exact path='/defaulters'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/defaulters'>
+                <ErrorBoundary>
                   <Defaulter />
-                </PrivateRoute>
-                <PrivateRoute exact path='/qr'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/qr'>
+                <ErrorBoundary>
                   <QrImages />
-                </PrivateRoute>
-                <PrivateRoute exact path='/drivers/:driverId'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/drivers/:driverId'>
+                <ErrorBoundary>
                   <Profile />
-                </PrivateRoute>
-                <Route exact path='/login'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <Route exact path='/login'>
+                <ErrorBoundary>
                   <Login />
-                </Route>
-                <PrivateRoute exact path='/register'>
+                </ErrorBoundary>
+              </Route>
+              <PrivateRoute exact path='/register'>
+                <ErrorBoundary>
                   <Register />
-                </PrivateRoute>
-                <PrivateRoute exact path='/collect-payment'>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/collect-payment'>
+                <ErrorBoundary>
                   <CollectPayment />
-                </PrivateRoute>
-                <Route path='*'>
-                  <PageNotFound />
-                </Route>
-              </Switch>
-            </Layout>
-          </ErrorBoundary>
+                </ErrorBoundary>
+              </PrivateRoute>
+              <Route path='*'>
+                <PageNotFound />
+              </Route>
+            </Switch>
+          </Layout>
         </Router>
       </ThemeProvider>
     </AuthProvider>
