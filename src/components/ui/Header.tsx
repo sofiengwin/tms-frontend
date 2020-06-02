@@ -4,7 +4,7 @@ import {
   Navbar,
   Nav,
 } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {
   const history = useHistory();
