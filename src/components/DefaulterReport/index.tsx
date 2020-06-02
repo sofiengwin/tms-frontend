@@ -1,23 +1,38 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Report from "../Report/ReportCard";
 import { reports } from "../Report/data";
+import { AuthContext } from "../context/AuthContext";
+import Defaulters from './Defaulters';
+import Spinner from '../ui/Spinner';
+import { observer } from "mobx-react";
 
-interface ReportInterface {
-  id: number;
-  name: string;
-  color: string;
-}
+const DefaultReport: React.FC = () => {
+  const {appService} = useContext(AuthContext);
+  const [defaulters, setDefaulters] = useState({})
 
-const index: React.FC = () => {
+  useEffect(() => {
+    const fetchDefaulters = async () => {
+      const dfts = await appService.fetchDefaulters()
+
+      console.log({dfts});
+
+      if (dfts) {
+        setDefaulters(dfts);
+      }
+    }
+
+    fetchDefaulters();
+  }, []);
+
   return (
-    <Container>
-      <Report title='Defaulters Report' data={reports} />
-    </Container>
+    <>
+      {appService.isLoading ? <Spinner /> : <Defaulters defaulters={defaulters} />}
+    </>
   );
 };
 
-export default index;
+export default observer(DefaultReport);
 
 export const Container = styled.div`
   padding: 5% 10%;

@@ -54,7 +54,7 @@ const Login = () => {
       history.replace(from);
     }
   };
-
+  console.log({errors})
   return (
     <CardStyle>
       <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
@@ -87,15 +87,9 @@ const Login = () => {
           variant='success'
           type='submit'
           onClick={loginUser}
-          loading={appService.isLoading}
           disabled={appService.isLoading}
         >
-          <IStyle
-            size='1'
-            color='white'
-            className='fas fa-sign-in-alt'
-          ></IStyle>{" "}
-          Login
+          {appService.isLoading ? "Loading" : "Login"}
         </ButtonStyle>
       </FormStyle>
     </CardStyle>

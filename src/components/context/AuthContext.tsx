@@ -11,7 +11,7 @@ const appService = new AppService(client);
 export const AuthContext = createContext({ appService });
 // restore session if there is a valid token in local storage
 if (localStorage.getItem('session')) {
-  appService.logginIn();
+  // appService.logginIn();
   // appService.restoreSession();
 }
 

@@ -28,7 +28,7 @@ interface Response {
 export default async function login(client: FetchQl, {email, password}: {email: string, password: string}) {
   // @ts-ignore
   const response: Response = await client(QUERY, {email, password});
-  console.log({response})
+  console.log({response}, 'login')
 
   if (response.login.errors) {
     return response.login;

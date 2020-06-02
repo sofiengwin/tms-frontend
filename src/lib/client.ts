@@ -20,6 +20,7 @@ const clientFactory = (endpoint: string, tokenGetter: () => string): FetchQl => 
     })
       .then(response => {
         if (!response.ok) {
+          console.log({response}, 'response', response.statusText)
           throw new Error(response.statusText);
         }
 
@@ -27,6 +28,7 @@ const clientFactory = (endpoint: string, tokenGetter: () => string): FetchQl => 
       })
       .then<GraphQLResponse>(response => response.json())
       .then(({data, error}) => {
+        console.log({data, error})
         if (error) {
           throw new Error();
         }

@@ -16,7 +16,9 @@ const Reports: React.FC = () => {
     const pyts = await appService.fetchPayments();
     console.log({ pyts });
 
-    setPayments(pyts);
+    if (pyts) {
+      setPayments(pyts);
+    }
   };
 
   useEffect(() => {

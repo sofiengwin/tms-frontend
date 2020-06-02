@@ -64,7 +64,7 @@ const Register = () => {
         onClose={onSuccess}
         variant="success"
         title="Bootstrap"
-        message="Hello, world! This is a toast message."
+        message="New Driver added!"
       />
       <CardStyle>
         <IStyle size='3em' color='teal' className='fas fa-users'></IStyle>

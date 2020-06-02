@@ -10,11 +10,14 @@ import createDriverCall from '../data/graphql/createDriver';
 import { ICreateDriver } from '../data/models/Driver';
 import fetchPaymentsCall from '../data/graphql/fetchPayments';
 import fetchDriverCall from '../data/graphql/fetchDriver';
+import fetchDefaultersCall from '../data/graphql/fetchDefaulters';
+import fetchDriversCall from '../data/graphql/fetchDrivers';
 
 export default class AppService {
   client: FetchQl;
   @observable isLogedin: boolean = false;
   @observable isLoading: boolean = false;
+  errorHandler!: (error: AppErrorType) => void;
   admin: IAdmin | null = null;
   errors = observable.array<string>([]);
 
@@ -27,14 +30,22 @@ export default class AppService {
     handleError: (errors: string[]) => void
   ) => {
     this.isLoading = true;
-    const { payment, errors } = await recordPaymentCall(this.client, data);
-
-    this.isLoading = false;
-    if (payment) {
-      return payment;
-    } else if (errors) {
-      handleError(errors);
+    try {
+      const { payment, errors } = await recordPaymentCall(this.client, data);
+      
+      this.isLoading = false;
+      
+      if (payment) {
+        return payment;
+      } else if (errors) {
+        handleError(errors);
+      }
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message);
     }
+      
+
   };
 
   @action
@@ -43,6 +54,7 @@ export default class AppService {
     handleError: (errors: string[]) => void
   ) {
     this.isLoading = true;
+   try {
     const { admin, hhh: accessToken, errors } = await loginCall(this.client, {
       email,
       password,
@@ -56,6 +68,10 @@ export default class AppService {
       handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
     }
     this.isLoading = false;
+   } catch (error) {
+     this.isLoading = false;
+     this.errorHandler(error.message)
+   }
   }
 
   @action
@@ -64,15 +80,22 @@ export default class AppService {
       return;
     }
 
-    this.isLoading = true;
-
-    const { admin } = await meCall(this.client);
-
-    if (admin) {
-      this.admin = admin;
-      this.isLogedin = true;
+    try {
+      this.isLoading = true;
+  
+      const { admin } = await meCall(this.client);
+  
+      if (admin) {
+        this.admin = admin;
+        this.isLogedin = true;
+      }
+      this.isLoading = false;
+      
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message);
     }
-    this.isLoading = false;
+
   }
 
   @action
@@ -86,32 +109,83 @@ export default class AppService {
     handleError: (errors: string[]) => void
   ) {
     this.isLoading = true;
-    const { driver, errors } = await createDriverCall(this.client, data);
-    console.log({ driver, errors });
-    this.isLoading = false;
-
-    if (driver) {
-      return driver;
-    } else {
-      handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
+    try {
+      const { driver, errors } = await createDriverCall(this.client, data);
+      console.log({ driver, errors });
+      this.isLoading = false;
+  
+      if (driver) {
+        return driver;
+      } else {
+        handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
+      }
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message);
     }
   }
 
   @action
   async fetchPayments() {
     this.isLoading = true;
-    const payments = await fetchPaymentsCall(this.client);
-    this.isLoading = false;
-
-    return payments;
+    
+    try {
+      const payments = await fetchPaymentsCall(this.client);
+      this.isLoading = false;
+  
+      return payments;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message)
+    }
   }
 
   @action
   async fetchDriver(driverId: number) {
     this.isLoading = true;
-    const driver = await fetchDriverCall(this.client, driverId)
-    this.isLoading = false;
+    
+    try {
+      const driver = await fetchDriverCall(this.client, driverId)
+      this.isLoading = false;
+  
+      return driver;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message)
+    }
+  }
 
-    return driver;
+  @action
+  async fetchDefaulters(){
+    this.isLoading = true;
+    
+    try {
+      const defaulters = await fetchDefaultersCall(this.client);
+      this.isLoading = false;
+      
+      return defaulters;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message)
+    }
+  }
+
+  @action
+  async fetchDrivers(){
+    this.isLoading = false;
+    try {
+      const drivers = await fetchDriversCall(this.client);
+      
+      this.isLoading = false;
+      return drivers;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message)
+      console.log({error}, 'fetchDriver', error.message, error.name)
+    }
+  }
+
+  addErrorHandler(errorHandler: (error: AppErrorType) => void) {
+    this.errorHandler = errorHandler;
   }
 }
