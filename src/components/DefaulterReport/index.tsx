@@ -1,33 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import Report from "../Report/ReportCard";
-import { reports } from "../Report/data";
 import { AuthContext } from "../context/AuthContext";
-import Defaulters from './Defaulters';
-import Spinner from '../ui/Spinner';
+import Defaulters from "./Defaulters";
+import Spinner from "../ui/Spinner";
 import { observer } from "mobx-react";
 
 const DefaultReport: React.FC = () => {
-  const {appService} = useContext(AuthContext);
-  const [defaulters, setDefaulters] = useState({})
+  const { appService } = useContext(AuthContext);
+  const [defaulters, setDefaulters] = useState({});
 
   useEffect(() => {
     const fetchDefaulters = async () => {
-      const dfts = await appService.fetchDefaulters()
+      const dfts = await appService.fetchDefaulters();
 
-      console.log({dfts});
+      console.log({ dfts });
 
       if (dfts) {
         setDefaulters(dfts);
       }
-    }
+    };
 
     fetchDefaulters();
+
+    // eslint-disable-next-line
   }, []);
 
   return (
     <>
-      {appService.isLoading ? <Spinner /> : <Defaulters defaulters={defaulters} />}
+      {appService.isLoading ? (
+        <Spinner />
+      ) : (
+        <Defaulters defaulters={defaulters} />
+      )}
     </>
   );
 };
