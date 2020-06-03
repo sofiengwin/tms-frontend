@@ -172,20 +172,27 @@ export default class AppService {
 
   @action
   async fetchDrivers(){
-    this.isLoading = false;
-    try {
-      const drivers = await fetchDriversCall(this.client);
-      
-      this.isLoading = false;
-      return drivers;
-    } catch (error) {
-      this.isLoading = false;
-      this.errorHandler(error.message)
-      console.log({error}, 'fetchDriver', error.message, error.name)
-    }
+    return await this.catch(async () => {
+        const drivers = await fetchDriversCall(this.client);
+        
+        this.isLoading = false;
+        return drivers;
+    })
   }
 
   addErrorHandler(errorHandler: (error: AppErrorType) => void) {
     this.errorHandler = errorHandler;
+  }
+
+  private async catch<T>(loader: () => Promise<T>) {
+    console.log('catch')
+    this.isLoading = true;
+    try {
+      console.log('waiting for request to be made')
+      return await loader();
+    } catch (error) {
+      this.errorHandler(error.message);
+      this.isLoading = false;
+    }
   }
 }

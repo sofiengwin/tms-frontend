@@ -35,7 +35,7 @@ const Scanner: React.FC<Props> = ({onScan}) => {
 
   const handleError = (error: any) => {
     if (error) {
-      setErrors(['Something is wrong with the scanner. Try again later or contact X'])
+      setErrors([`Something is wrong with the scanner. Try again later or contact X ${error}`])
     }
   }
 
@@ -45,7 +45,7 @@ const Scanner: React.FC<Props> = ({onScan}) => {
         show={errors.length > 0}
         errorMessages={errors}
         onClose={() => {
-          setShowError(false);
+          setErrors([]);
           history.push('/');
         }}
       />
@@ -58,6 +58,7 @@ const Scanner: React.FC<Props> = ({onScan}) => {
             style={previewStyle}
             delay={1000}
             onLoad={() => console.log('loaded')}
+            facingMode={"rear"}
           />
         </Preview>
         <div>

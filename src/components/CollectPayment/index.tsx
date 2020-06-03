@@ -3,7 +3,7 @@ import Scanner from "./Scanner";
 import Payment from "./Payment";
 
 const CollectPayment = () => {
-  const [data, setData] = React.useState("1::1");
+  const [data, setData] = React.useState("");
 
   const onScan = (data: string) => {
     if (data) {
