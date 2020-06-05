@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 import { ICreateDriver } from "../../data/models/Driver";
 
 interface Props {
-  title: string;
+  title: any;
   data: any[];
 }
 
@@ -23,13 +23,19 @@ const Report: React.FC<Props> = ({ title, data }) => {
               </tr>
             </thead>
             <tbody>
-              {data.map(({name, motNumber, areaOfOperation }: ICreateDriver, index: number) => (
-                <tr key={index}>
-                  <td>{name}</td>
-                  <td>{areaOfOperation}</td>
-                  <td>{motNumber}</td>
-                </tr>
-              ))}
+              {data !== undefined &&
+                data.map(
+                  (
+                    { name, motNumber, areaOfOperation }: ICreateDriver,
+                    index: number
+                  ) => (
+                    <tr key={index}>
+                      <td>{name}</td>
+                      <td>{areaOfOperation}</td>
+                      <td>{motNumber}</td>
+                    </tr>
+                  )
+                )}
             </tbody>
           </Table>
         </List>
@@ -45,7 +51,7 @@ export const Container = styled.div`
   width: 100%;
 
   @media (max-width: 769px) {
-    padding: 5% 0;
+    padding: 5% 1em;
 
     th,
     td {

@@ -1,9 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {
-  Navbar,
-  Nav,
-} from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {
@@ -20,11 +17,12 @@ const Header: React.FC = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav className='mr-auto'>
+        <Nav className='ml-auto'>
           <StyleLink to='/'>Home</StyleLink>
           <StyleLink to='/register'>Add Driver</StyleLink>
           <StyleLink to='/report'>Reports</StyleLink>
           <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
+          <StyleLink to='/cashier'>Cashier Profile</StyleLink>
           <StyleLink to='/qr'>QR Codes</StyleLink>
         </Nav>
       </Navbar.Collapse>
@@ -46,10 +44,14 @@ const StyleLink = styled(Link)`
   color: #888;
   text-decoration: none;
   padding: 1em;
-  border-bottom: 1px solid #dddddd;
 
   &:last-child {
     border-bottom: none;
+  }
+
+  @media (max-width: 769px) {
+    padding: 1em;
+    border-bottom: 1px solid #dddddd;
   }
 `;
 
