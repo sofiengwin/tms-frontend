@@ -16,6 +16,7 @@ import QrImages from "./components/QrImages";
 import PageNotFound from "./PageNotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CashierProfile from "./components/CashierProfile";
+import DashboardPage from "./components/AdminDashboard";
 
 function App() {
   return (
@@ -42,6 +43,11 @@ function App() {
               <Route exact path='/cashier'>
                 <ErrorBoundary>
                   <CashierProfile />
+                </ErrorBoundary>
+              </Route>
+              <Route exact path='/admin'>
+                <ErrorBoundary>
+                  <DashboardPage />
                 </ErrorBoundary>
               </Route>
               <PrivateRoute exact path='/qr'>

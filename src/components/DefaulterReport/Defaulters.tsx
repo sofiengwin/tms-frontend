@@ -4,15 +4,25 @@ import Report from "./DefaultersReport";
 import { ICreateDriver } from "../../data/models/Driver";
 
 interface Props {
-  defaulters: Dict<ICreateDriver[]>
+  defaulters: Dict<ICreateDriver[]>;
+  state: string;
 }
 
-const Defaulters: React.FC<Props> = ({defaulters}) => {
+const Defaulters: React.FC<Props> = ({ defaulters, state }) => {
+  let newState = state !== undefined ? state : "";
+  console.log({ good: defaulters[newState], newState });
   return (
     <Container>
-      {Object.keys(defaulters).map((day, index) => {
-        return <Report key={index} title={day.toUpperCase()} data={defaulters[day]} />
-      })}
+      <Report title={newState.toUpperCase()} data={defaulters[newState]} />
+      {/* {Object.keys(defaulters).map((day, index) => {
+        return (
+          <Report
+            key={index}
+            title={day.toUpperCase()}
+            data={defaulters[day]}
+          />
+        );
+      })} */}
     </Container>
   );
 };

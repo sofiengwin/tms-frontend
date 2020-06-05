@@ -11,6 +11,7 @@
     "@types/react": "^16.9.0",
     "@types/react-chartjs-2": "^2.5.7",
     "@types/react-dom": "^16.9.0",
+    "@types/react-select": "^3.0.13",
     "bootstrap": "^4.5.0",
     "chart": "^0.1.2",
     "chart.js": "^2.9.3",
@@ -23,6 +24,7 @@
     "react-qr-scanner": "^0.0.9",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-select": "^3.1.0",
     "styled-components": "^5.1.0",
     "typescript": "~3.7.2",
     "use-error-boundary": "^1.2.3"
