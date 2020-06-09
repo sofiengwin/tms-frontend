@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 
-const Charted = () => {
+interface Props {
+  dailyTotals: {date: string, amount: number}[];
+}
+
+const Charted: React.FC<Props> = ({dailyTotals}) => {
+  const dd = dailyTotals.map((d) => d.amount)
+  console.log({dailyTotals, dd})
   const [chartData] = useState({
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: dailyTotals.map((d) => d.date),
     datasets: [
       {
-        label: "Weeks",
-        data: [1000, 1000, 800, 1200, 1200, 400, 800],
+        label: "Date",
+        data: dailyTotals.map((d) => d.amount),
         backgroundColor: [
           `${"violet"}`,
           `${"violet"}`,

@@ -40,7 +40,7 @@ function App() {
                   <Defaulter />
                 </ErrorBoundary>
               </PrivateRoute>
-              <Route exact path='/cashier'>
+              <Route exact path='/cashier/:cashierId'>
                 <ErrorBoundary>
                   <CashierProfile />
                 </ErrorBoundary>

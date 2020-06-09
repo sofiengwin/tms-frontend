@@ -12,6 +12,7 @@ import fetchPaymentsCall from '../data/graphql/fetchPayments';
 import fetchDriverCall from '../data/graphql/fetchDriver';
 import fetchDefaultersCall from '../data/graphql/fetchDefaulters';
 import fetchDriversCall from '../data/graphql/fetchDrivers';
+import fetchPaymentStatsCall from '../data/graphql/fetchPaymentStats';
 
 export default class AppService {
   client: FetchQl;
@@ -64,6 +65,7 @@ export default class AppService {
       this.isLogedin = true;
       this.admin = admin;
       localStorage.setItem("session", accessToken);
+      localStorage.setItem('admin', JSON.stringify(admin))
     } else if (errors) {
       handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
     }
@@ -79,23 +81,13 @@ export default class AppService {
     if (this.admin) {
       return;
     }
-
-    try {
-      this.isLoading = true;
-  
-      const { admin } = await meCall(this.client);
-  
-      if (admin) {
-        this.admin = admin;
-        this.isLogedin = true;
-      }
-      this.isLoading = false;
-      
-    } catch (error) {
-      this.isLoading = false;
-      this.errorHandler(error.message);
+    const adminString = localStorage.getItem('admin');
+    if (adminString) {
+      this.admin = JSON.parse(adminString)
+      this.logginIn();
+      console.log({adminString}, JSON.parse(adminString))
     }
-
+    console.log(this.admin)
   }
 
   @action
@@ -183,10 +175,10 @@ export default class AppService {
   @action
   async fetchPaymentStats(cashierId?: string){
     return await this.catch(async () => {
-        const drivers = await fetchDriversCall(this.client);
+        const paymentStat = await fetchPaymentStatsCall(this.client, cashierId);
         
         this.isLoading = false;
-        return drivers;
+        return paymentStat;
     })
   }
 

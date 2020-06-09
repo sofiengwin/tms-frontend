@@ -1,30 +1,57 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Charted from "./Chart";
 import CardUi from "../ui/Card";
+import { AuthContext } from "../context/AuthContext";
+import { useParams } from "react-router-dom";
+import Spinner from '../ui/Spinner';
 
-const cardContents = [
-  { title: "Yearly", amount: "1,000,000" },
-  { title: "Monthly", amount: "100,000" },
-  { title: "Daily", amount: "10,000" },
-];
 
 const CashierProfile = () => {
+  const [stats, setStats] = useState<any>({})
+  const {appService} = useContext(AuthContext)
+  const {cashierId} = useParams();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const sts = await appService.fetchPaymentStats(cashierId)
+      console.log({sts})
+      setStats(sts)
+    }
+
+    fetchStats();
+  }, []);
+
+  const cardContents = [
+    { title: "Yearly", amount: stats.yearlyTotal },
+    { title: "Monthly", amount: stats.monthlyTotal},
+    { title: "Daily", amount: stats.today },
+  ];
+
+  const {cashier} = stats;
+  console.log({stats})
+
   return (
-    <Container>
-      <H1>Cashier Profile</H1>
-      <Charted />
-      <Grid>
-        {cardContents.map((content) => (
-          <CardUi content={content} />
-        ))}
-      </Grid>
-      <Profile>
-        <p>Name: John Doe</p>
-        <p>Email Address: johnd@example.com</p>
-        <p>Location: Akenfa</p>
-      </Profile>
-    </Container>
+    <>
+      {appService.isLoading ? (
+        <Spinner />
+      ) : (
+        <Container>
+          <H1>Cashier Profile</H1>
+          {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
+          {stats.yearlyTotal && <Grid>
+            {cardContents.map((content, index) => (
+              <CardUi key={index} content={content} />
+            ))}
+          </Grid>}
+          {cashier && <Profile>
+            <p>Name: {cashier.name}</p>
+            <p>Email Address: {cashier.email}</p>
+            <p>Location: {cashier.areaOfOperation}</p>
+          </Profile>}
+        </Container>
+      )}
+    </>
   );
 };
 

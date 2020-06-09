@@ -4,13 +4,12 @@ import { AuthContext } from "./components/context/AuthContext";
 
 const PrivateRoute = ({ children, ...rest }: any) => {
   const { appService } = useContext(AuthContext);
-  const session = localStorage.getItem("session");
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        appService.isLogedin || session ? (
+        appService.isLogedin ? (
           children
         ) : (
           <Redirect

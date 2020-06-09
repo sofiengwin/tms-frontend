@@ -1,34 +1,51 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Charted from "../CashierProfile/Chart";
 import CardUi from "../ui/Card";
+import { AuthContext } from "../context/AuthContext";
+import Spinner from '../ui/Spinner';
 
-const cardContents = [
-  { title: "Yearly", amount: "1,000,000" },
-  { title: "Monthly", amount: "100,000" },
-  { title: "Daily", amount: "10,000" },
-];
 
-const DashboardPage = () => {
+const PaymentStats = () => {
+  const [stats, setStats] = useState<any>({})
+  const {appService} = useContext(AuthContext)
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const sts = await appService.fetchPaymentStats(undefined)
+      console.log({sts})
+      setStats(sts)
+    }
+
+    fetchStats();
+  }, []);
+
+  const cardContents = [
+    { title: "Yearly", amount: stats.yearlyTotal },
+    { title: "Monthly", amount: stats.monthlyTotal},
+    { title: "Daily", amount: stats.today },
+  ];
+
   return (
-    <Container>
-      <H1>Admin Dashboard Profile</H1>
-      <Charted />
-      <Grid>
-        {cardContents.map((content) => (
-          <CardUi content={content} />
-        ))}
-      </Grid>
-      <Profile>
-        <p>Name: John Doe</p>
-        <p>Email Address: johnd@example.com</p>
-        <p>Location: Akenfa</p>
-      </Profile>
-    </Container>
+    <>
+      {appService.isLoading ? (
+        <Spinner />
+      ) : (
+        <Container>
+          <H1>Payment Stats</H1>
+          {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
+          {stats.yearlyTotal && <Grid>
+            {cardContents.map((content, index) => (
+              <CardUi key={index} content={content} />
+            ))}
+          </Grid>}
+        </Container>
+      )}
+    </>
   );
 };
 
-export default DashboardPage;
+export default PaymentStats;
 
 const Container = styled.div`
   width: 100%;
