@@ -180,6 +180,16 @@ export default class AppService {
     })
   }
 
+  @action
+  async fetchPaymentStats(cashierId?: string){
+    return await this.catch(async () => {
+        const drivers = await fetchDriversCall(this.client);
+        
+        this.isLoading = false;
+        return drivers;
+    })
+  }
+
   addErrorHandler(errorHandler: (error: AppErrorType) => void) {
     this.errorHandler = errorHandler;
   }

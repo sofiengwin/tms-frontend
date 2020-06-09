@@ -4,26 +4,27 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {
+  const [expanded, setExpanded] = React.useState(false)
   const history = useHistory();
   const location = useLocation();
   return (
-    <NavStyle bg='light' expand='lg' sticky='top'>
+    <NavStyle bg='light' expand='lg' sticky='top' onClick={() => setExpanded(true)} expanded={expanded}>
       <Navbar.Brand>
         {location.pathname === "/" ? (
-          <Label>BYSRVS</Label>
+          <Label>BYSRCS</Label>
         ) : (
           <Label onClick={() => history.goBack()}>Back</Label>
         )}
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav className='ml-auto'>
-          <StyleLink to='/'>Home</StyleLink>
-          <StyleLink to='/register'>Add Driver</StyleLink>
-          <StyleLink to='/report'>Reports</StyleLink>
-          <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
-          <StyleLink to='/cashier'>Cashier Profile</StyleLink>
-          <StyleLink to='/qr'>QR Codes</StyleLink>
+        <Nav className='ml-auto' onSelect={() => setExpanded(false)}>
+          <StyleLink to='/' onClick={() => setExpanded(false)}>Home</StyleLink>
+          <StyleLink to='/register' onClick={() => setExpanded(false)}>Add Driver</StyleLink>
+          <StyleLink to='/report' onClick={() => setExpanded(false)}>Reports</StyleLink>
+          <StyleLink to='/defaulters' onClick={() => setExpanded(false)}>Defaulter Report</StyleLink>
+          <StyleLink to='/cashier' onClick={() => setExpanded(false)}>Cashier Profile</StyleLink>
+          <StyleLink to='/qr' onClick={() => setExpanded(false)}>QR Codes</StyleLink>
         </Nav>
       </Navbar.Collapse>
     </NavStyle>

@@ -23,10 +23,8 @@ const Reports: React.FC = () => {
 
   useEffect(() => {
     fetchPayments();
-
-    // eslint-disable-next-line
   }, []);
-  console.log({ appService }, appService.isLoading);
+
   return (
     <Container>
       {appService.isLoading ? (
@@ -38,7 +36,7 @@ const Reports: React.FC = () => {
           />
         </Center>
       ) : (
-        <Report title='Today Report' data={payments} />
+        <Report title='Payment History' data={payments} />
       )}
     </Container>
   );
@@ -47,10 +45,9 @@ const Reports: React.FC = () => {
 export default observer(Reports);
 
 export const Container = styled.div`
-  padding: 5% 10%;
   width: 100%;
 
   @media (max-width: 769px) {
-    padding: 5% 0.5em;
+    padding: 5px 5px;
   }
 `;

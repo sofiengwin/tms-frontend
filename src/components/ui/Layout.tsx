@@ -6,7 +6,6 @@ const Container = styled.div``;
 
 const MainContent = styled.div`
   display: flex;
-  justify-content: center;
   padding-top: 5%;
   margin: 0;
 `;

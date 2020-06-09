@@ -7,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import Warning from '../ui/AlertWarning';
 import Toast from '../ui/Toast';
+import {Center} from '../ui/Center';
 
 const cantBeBlank = (fiieldName: string) => `${fiieldName} can't be blank`
 
@@ -66,82 +67,84 @@ const Register = () => {
         title="Bootstrap"
         message="New Driver added!"
       />
-      <CardStyle>
-        <IStyle size='3em' color='teal' className='fas fa-users'></IStyle>
-        <H1Style>Create Driver</H1Style>
-        <Warning errors={errors} errorMessages={errorMessages}/>
-        <FormStyle onSubmit={createDriver}>
-          <TextInput
-            name='name'
-            type='text'
-            placeholder='Name'
-            value={driver.name}
-            onChange={handleInput}
-            label='Full Name'
-          />
-          <TextInput
-            name='phoneNumber'
-            type='text'
-            placeholder='Phone Number'
-            value={driver.phoneNumber}
-            onChange={handleInput}
-            label='Phone Number'
-          />
+      <Center>
+        <CardStyle>
+          <IStyle size='3em' color='teal' className='fas fa-users'></IStyle>
+          <H1Style>Create Driver</H1Style>
+          <Warning errors={errors} errorMessages={errorMessages}/>
+          <FormStyle onSubmit={createDriver}>
+            <TextInput
+              name='name'
+              type='text'
+              placeholder='Name'
+              value={driver.name}
+              onChange={handleInput}
+              label='Full Name'
+            />
+            <TextInput
+              name='phoneNumber'
+              type='text'
+              placeholder='Phone Number'
+              value={driver.phoneNumber}
+              onChange={handleInput}
+              label='Phone Number'
+            />
 
-          <TextInput
-            name='motNumber'
-            type='text'
-            placeholder='MOT Number'
-            value={driver.motNumber}
-            onChange={handleInput}
-            label='MOT Number'
-          />
+            <TextInput
+              name='motNumber'
+              type='text'
+              placeholder='MOT Number'
+              value={driver.motNumber}
+              onChange={handleInput}
+              label='MOT Number'
+            />
 
-          <TextInput
-            name='address'
-            type='text'
-            placeholder='Residential Address'
-            value={driver.address}
-            onChange={handleInput}
-            label='Residential Address'
-          />
-          <TextInput
-            name='state'
-            type='text'
-            placeholder='State Of Origin'
-            value={driver.state}
-            onChange={handleInput}
-            label='State Of Origin'
-          />
+            <TextInput
+              name='address'
+              type='text'
+              placeholder='Residential Address'
+              value={driver.address}
+              onChange={handleInput}
+              label='Residential Address'
+            />
+            <TextInput
+              name='state'
+              type='text'
+              placeholder='State Of Origin'
+              value={driver.state}
+              onChange={handleInput}
+              label='State Of Origin'
+            />
 
-          <TextInput
-            name='hometown'
-            type='text'
-            placeholder='Hometown'
-            value={driver.hometown}
-            onChange={handleInput}
-            label='Hometown'
-          />
+            <TextInput
+              name='hometown'
+              type='text'
+              placeholder='Hometown'
+              value={driver.hometown}
+              onChange={handleInput}
+              label='Hometown'
+            />
 
-          <TextInput
-            name='areaOfOperation'
-            type='text'
-            placeholder='Area Of Operation'
-            value={driver.areaOfOperation}
-            onChange={handleInput}
-            label='Area Of Operation'
-          />
+            <TextInput
+              name='areaOfOperation'
+              type='text'
+              placeholder='Area Of Operation'
+              value={driver.areaOfOperation}
+              onChange={handleInput}
+              label='Area Of Operation'
+            />
 
-          <ButtonStyle variant='success' type='submit'>
-            <IStyle
-              size='1'
-              color='white'
-              className='fas fa-sign-in-alt'
-            ></IStyle>{" "}
-            Save
-          </ButtonStyle>
-        </FormStyle>
-      </CardStyle>
+            <ButtonStyle variant='success' type='submit'>
+              <IStyle
+                size='1'
+                color='white'
+                className='fas fa-sign-in-alt'
+              ></IStyle>{" "}
+              Save
+            </ButtonStyle>
+          </FormStyle>
+        </CardStyle>
+      </Center>
     </>
   );
 };

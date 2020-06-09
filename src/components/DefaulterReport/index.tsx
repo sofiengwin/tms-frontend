@@ -4,9 +4,9 @@ import { AuthContext } from "../context/AuthContext";
 import Defaulters from "./Defaulters";
 import Spinner from "../ui/Spinner";
 import { observer } from "mobx-react";
+import {Center} from '../ui/Center';
 
 const options = [
-  "select a date",
   "monday",
   "tuesday",
   "wednesday",
@@ -17,7 +17,7 @@ const options = [
 const DefaultReport: React.FC = () => {
   const { appService } = useContext(AuthContext);
   const [defaulters, setDefaulters] = useState({});
-  const [state, setState] = useState<string>("");
+  const [state, setState] = useState<string>("monday");
 
   useEffect(() => {
     const fetchDefaulters = async () => {
@@ -40,17 +40,19 @@ const DefaultReport: React.FC = () => {
   };
   return (
     <Container>
-      <div style={{ padding: "0 1em" }}>
-        <SelectStyle onChange={handleChange}>
-          {options.map((text: string) => (
-            <option value={text}>{text}</option>
-          ))}
-        </SelectStyle>
-      </div>
       {appService.isLoading ? (
         <Spinner />
       ) : (
+        <Center style={{flexDirection: 'column'}}>
+        <div style={{ padding: "0 1em" }}>
+          <SelectStyle onChange={handleChange}>
+            {options.map((text: string) => (
+              <option value={text}>{text}</option>
+            ))}
+          </SelectStyle>
+        </div>
         <Defaulters defaulters={defaulters} state={state} />
+        </Center>
       )}
     </Container>
   );
