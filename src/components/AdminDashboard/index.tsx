@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import {observer} from 'mobx-react';
 import styled from "styled-components";
 import Charted from "../CashierProfile/Chart";
 import CardUi from "../ui/Card";
@@ -45,7 +46,7 @@ const PaymentStats = () => {
   );
 };
 
-export default PaymentStats;
+export default observer(PaymentStats);
 
 const Container = styled.div`
   width: 100%;

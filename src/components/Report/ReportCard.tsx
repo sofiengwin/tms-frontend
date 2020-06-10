@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { IPayment } from "../../data/models/Payment";
+import {Link} from 'react-router-dom';
 
 interface Props {
   title: string;
@@ -28,8 +29,8 @@ const Report: React.FC<Props> = ({ title, data }) => {
                 <tr key={index}>
                   <td>{createdAt}</td>
                   <td>{amount}</td>
-                  <td>{cashier.name}</td>
-                  <td>{driver.motNumber}</td>
+                  <td><Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link></td>
+                  <td><Link to={`/drivers/${driver.id}`}>{driver.motNumber}</Link></td>
                 </tr>
               ))}
             </tbody>

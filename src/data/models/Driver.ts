@@ -1,4 +1,5 @@
 export interface ICreateDriver {
+  id?: number;
   name: string;
   phoneNumber: string;
   motNumber: string;
@@ -10,6 +11,7 @@ export interface ICreateDriver {
 }
 
 export const driverFields = `
+  id
   name
   phoneNumber
   motNumber

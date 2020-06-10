@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { ICreateDriver } from "../../data/models/Driver";
@@ -26,13 +27,13 @@ const Report: React.FC<Props> = ({ title, data }) => {
               {data !== undefined &&
                 data.map(
                   (
-                    { name, motNumber, areaOfOperation }: ICreateDriver,
+                    { name, motNumber, areaOfOperation, id }: ICreateDriver & {id: number},
                     index: number
                   ) => (
                     <tr key={index}>
                       <td>{name}</td>
                       <td>{areaOfOperation}</td>
-                      <td>{motNumber}</td>
+                      <td><Link to={`/drivers/${id}`}>{motNumber}</Link></td>
                     </tr>
                   )
                 )}
