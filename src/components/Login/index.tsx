@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import TextInput from "../ui/TextInput";
 import { observer } from "mobx-react";
 import Warning from "../ui/AlertWarning";
+import { Center } from "../ui/Center";
 
 const errorMessages = {
   invalid_emailOrPassword: "Problem logging in! Check your Email and Password",
@@ -56,43 +57,45 @@ const Login = () => {
   };
   console.log({errors})
   return (
-    <CardStyle>
-      <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
-      <H1Style>Login Here</H1Style>
-      <Warning errors={errors} errorMessages={errorMessages} />
-      <FormStyle>
-        <TextInput
-          key={1}
-          label='Email address'
-          type='email'
-          value={user.email}
-          placeholder='Email Address'
-          name='email'
-          onChange={handleInput}
-          error={undefined}
-        />
+    <Center>
+      <CardStyle>
+        <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
+        <H1Style>Login Here</H1Style>
+        <Warning errors={errors} errorMessages={errorMessages} />
+        <FormStyle>
+          <TextInput
+            key={1}
+            label='Email address'
+            type='email'
+            value={user.email}
+            placeholder='Email Address'
+            name='email'
+            onChange={handleInput}
+            error={undefined}
+          />
 
-        <TextInput
-          key={2}
-          label='Password'
-          type='password'
-          value={user.password}
-          placeholder='Password'
-          name='password'
-          onChange={handleInput}
-          error={undefined}
-        />
+          <TextInput
+            key={2}
+            label='Password'
+            type='password'
+            value={user.password}
+            placeholder='Password'
+            name='password'
+            onChange={handleInput}
+            error={undefined}
+          />
 
-        <ButtonStyle
-          variant='success'
-          type='submit'
-          onClick={loginUser}
-          disabled={appService.isLoading}
-        >
-          {appService.isLoading ? "Loading" : "Login"}
-        </ButtonStyle>
-      </FormStyle>
-    </CardStyle>
+          <ButtonStyle
+            variant='success'
+            type='submit'
+            onClick={loginUser}
+            disabled={appService.isLoading}
+          >
+            {appService.isLoading ? "Loading" : "Login"}
+          </ButtonStyle>
+        </FormStyle>
+      </CardStyle>
+    </Center>
   );
 };
 
