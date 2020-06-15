@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import {observer} from 'mobx-react';
 import styled from "styled-components";
 import Charted from "../CashierProfile/Chart";
 import CardUi from "../ui/Card";
 import { AuthContext } from "../context/AuthContext";
-import Spinner from '../ui/Spinner';
+import WithLoader from '../WithLoader';
 
+interface Props {
+  setLoading: (state: string) => void;
+}
 
-const PaymentStats = () => {
+const PaymentStats: React.FC<Props> = ({setLoading}) => {
   const [stats, setStats] = useState<any>({})
   const {appService} = useContext(AuthContext)
 
@@ -15,6 +17,7 @@ const PaymentStats = () => {
     const fetchStats = async () => {
       const sts = await appService.fetchPaymentStats(undefined)
       console.log({sts})
+      setLoading('loaded')
       setStats(sts)
     }
 
@@ -29,24 +32,20 @@ const PaymentStats = () => {
 
   return (
     <>
-      {appService.isLoading ? (
-        <Spinner />
-      ) : (
-        <Container>
-          <H1>Payment Stats</H1>
-          {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
-          {stats.yearlyTotal && <Grid>
-            {cardContents.map((content, index) => (
-              <CardUi key={index} content={content} />
-            ))}
-          </Grid>}
-        </Container>
-      )}
+      <Container>
+        <H1>Payment Stats</H1>
+        {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
+        {stats.yearlyTotal && <Grid>
+          {cardContents.map((content, index) => (
+            <CardUi key={index} content={content} />
+          ))}
+        </Grid>}
+      </Container>
     </>
   );
 };
 
-export default observer(PaymentStats);
+export default WithLoader(PaymentStats);
 
 const Container = styled.div`
   width: 100%;
@@ -61,11 +60,7 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1em;
 `;
-const Profile = styled.div`
-  border: 1px solid #999;
-  padding: 1em;
-  margin-top: 2em;
-`;
+
 const H1 = styled.h1`
   text-align: center;
   padding: 0 0 1em 0;

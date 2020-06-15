@@ -57,7 +57,7 @@ const Login = () => {
   };
   console.log({errors})
   return (
-    <Center>
+    <Center> 
       <CardStyle>
         <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
         <H1Style>Login Here</H1Style>
