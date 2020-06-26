@@ -1,28 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
+import {observer} from 'mobx-react';
 import styled from "styled-components";
 import Charted from "../CashierProfile/Chart";
 import CardUi from "../ui/Card";
 import { AuthContext } from "../context/AuthContext";
-import WithLoader from '../WithLoader';
+import CenterSpinner from "../ui/Spinner";
 
 interface Props {
-  setLoading: (state: string) => void;
 }
 
-const PaymentStats: React.FC<Props> = ({setLoading}) => {
+const PaymentStats: React.FC<Props> = ({}) => {
   const [stats, setStats] = useState<any>({})
   const {appService} = useContext(AuthContext)
 
   useEffect(() => {
     const fetchStats = async () => {
       const sts = await appService.fetchPaymentStats(undefined)
-      console.log({sts})
-      setLoading('loaded')
       setStats(sts)
     }
 
     fetchStats();
   }, []);
+
+  
 
   const cardContents = [
     { title: "Yearly", amount: stats.yearlyTotal },
@@ -32,20 +32,24 @@ const PaymentStats: React.FC<Props> = ({setLoading}) => {
 
   return (
     <>
-      <Container>
-        <H1>Payment Stats</H1>
-        {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
-        {stats.yearlyTotal && <Grid>
-          {cardContents.map((content, index) => (
-            <CardUi key={index} content={content} />
-          ))}
-        </Grid>}
-      </Container>
+      {appService.isLoading ? (
+        <CenterSpinner />
+      ) : (
+        <Container>
+          <H1>Payment Stats</H1>
+          {stats.dailyTotals && <Charted dailyTotals={stats.dailyTotals}/>}
+          {stats.yearlyTotal && <Grid>
+            {cardContents.map((content, index) => (
+              <CardUi key={index} content={content} />
+            ))}
+          </Grid>}
+        </Container>
+      )}
     </>
   );
 };
 
-export default WithLoader(PaymentStats);
+export default observer(PaymentStats);
 
 const Container = styled.div`
   width: 100%;

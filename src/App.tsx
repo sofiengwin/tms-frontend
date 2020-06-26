@@ -1,8 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
 import theme from "./components/styled/theme";
 import Layout from "./components/ui/Layout";
 import Home from "./components/Home";
@@ -20,77 +18,73 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import CashierProfile from "./components/CashierProfile";
 import DashboardPage from "./components/AdminDashboard";
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_HOST,
-});
+
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <Router>
-            <Layout>
-              <Switch>
-                <PrivateRoute exact path='/'>
-                  <ErrorBoundary>
-                    <Home />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <PrivateRoute exact path='/report'>
-                  <ErrorBoundary>
-                    <Report />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <PrivateRoute exact path='/defaulters'>
-                  <ErrorBoundary>
-                    <Defaulter />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <Route exact path='/cashier/:cashierId'>
-                  <ErrorBoundary>
-                    <CashierProfile />
-                  </ErrorBoundary>
-                </Route>
-                <Route exact path='/admin'>
-                  <ErrorBoundary>
-                    <DashboardPage />
-                  </ErrorBoundary>
-                </Route>
-                <PrivateRoute exact path='/qr'>
-                  <ErrorBoundary>
-                    <QrImages />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <PrivateRoute exact path='/drivers/:driverId'>
-                  <ErrorBoundary>
-                    <Profile />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <Route exact path='/login'>
-                  <ErrorBoundary>
-                    <Login />
-                  </ErrorBoundary>
-                </Route>
-                <PrivateRoute exact path='/register'>
-                  <ErrorBoundary>
-                    <Register />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <PrivateRoute exact path='/collect-payment'>
-                  <ErrorBoundary>
-                    <CollectPayment />
-                  </ErrorBoundary>
-                </PrivateRoute>
-                <Route path='*'>
-                  <PageNotFound />
-                </Route>
-              </Switch>
-            </Layout>
-          </Router>
-        </ThemeProvider>
-      </AuthProvider>
-    </ApolloProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Layout>
+            <Switch>
+              <PrivateRoute exact path='/'>
+                <ErrorBoundary>
+                  <Home />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/report'>
+                <ErrorBoundary>
+                  <Report />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/defaulters'>
+                <ErrorBoundary>
+                  <Defaulter />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <Route exact path='/cashier/:cashierId'>
+                <ErrorBoundary>
+                  <CashierProfile />
+                </ErrorBoundary>
+              </Route>
+              <Route exact path='/admin'>
+                <ErrorBoundary>
+                  <DashboardPage />
+                </ErrorBoundary>
+              </Route>
+              <PrivateRoute exact path='/qr'>
+                <ErrorBoundary>
+                  <QrImages />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/drivers/:driverId'>
+                <ErrorBoundary>
+                  <Profile />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <Route exact path='/login'>
+                <ErrorBoundary>
+                  <Login />
+                </ErrorBoundary>
+              </Route>
+              <PrivateRoute exact path='/register'>
+                <ErrorBoundary>
+                  <Register />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/collect-payment'>
+                <ErrorBoundary>
+                  <CollectPayment />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <Route path='*'>
+                <PageNotFound />
+              </Route>
+            </Switch>
+          </Layout>
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import { FetchQl } from "../../lib/client";
 import { adminFields, IAdmin } from "../models/Admin";
 
-const QUERY = `
+export const QUERY = `
   query fetchPaymentStats($cashierId: ID) {
     fetchPaymentStats(cashierId: $cashierId) {
       yearlyTotal
