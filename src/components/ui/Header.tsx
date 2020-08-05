@@ -24,6 +24,7 @@ const Header: React.FC = () => {
           <StyleLink to='/defaulters'>Defaulter Report</StyleLink>
           <StyleLink to='/admin'>Payment Stats</StyleLink>
           <StyleLink to='/qr'>QR Codes</StyleLink>
+          <StyleLink to='/drivers'>Drivers List</StyleLink>
         </Nav>
       </Navbar.Collapse>
     </NavStyle>

@@ -19,6 +19,7 @@ import CashierProfile from "./components/CashierProfile";
 import DashboardPage from "./components/AdminDashboard";
 import ResolveForm from "./components/ResolveForm/ResolveForm";
 import Payment from "./components/CollectPayment/";
+import ListDrivers from './components/Drivers';
 
 function App() {
   return (
@@ -85,6 +86,11 @@ function App() {
               <PrivateRoute exact path='/collect-payment'>
                 <ErrorBoundary>
                   <CollectPayment />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/drivers'>
+                <ErrorBoundary>
+                  <ListDrivers />
                 </ErrorBoundary>
               </PrivateRoute>
               <Route path='*'>
