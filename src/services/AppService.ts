@@ -3,16 +3,16 @@ import { FetchQl } from "../lib/client";
 import recordPaymentCall, {
   IRecordPayment,
 } from "../data/graphql/recordPayment";
-import loginCall from '../data/graphql/login';
-import {IAdmin} from '../data/models/Admin';
-import meCall from '../data/graphql/me';
-import createDriverCall from '../data/graphql/createDriver';
-import { ICreateDriver } from '../data/models/Driver';
-import fetchPaymentsCall from '../data/graphql/fetchPayments';
-import fetchDriverCall from '../data/graphql/fetchDriver';
-import fetchDefaultersCall from '../data/graphql/fetchDefaulters';
-import fetchDriversCall from '../data/graphql/fetchDrivers';
-import fetchPaymentStatsCall from '../data/graphql/fetchPaymentStats';
+import loginCall from "../data/graphql/login";
+import { IAdmin } from "../data/models/Admin";
+import meCall from "../data/graphql/me";
+import createDriverCall from "../data/graphql/createDriver";
+import { ICreateDriver } from "../data/models/Driver";
+import fetchPaymentsCall from "../data/graphql/fetchPayments";
+import fetchDriverCall from "../data/graphql/fetchDriver";
+import fetchDefaultersCall from "../data/graphql/fetchDefaulters";
+import fetchDriversCall from "../data/graphql/fetchDrivers";
+import fetchPaymentStatsCall from "../data/graphql/fetchPaymentStats";
 
 export default class AppService {
   client: FetchQl;
@@ -33,9 +33,9 @@ export default class AppService {
     this.isLoading = true;
     try {
       const { payment, errors } = await recordPaymentCall(this.client, data);
-      
+
       this.isLoading = false;
-      
+
       if (payment) {
         return payment;
       } else if (errors) {
@@ -45,8 +45,6 @@ export default class AppService {
       this.isLoading = false;
       this.errorHandler(error.message);
     }
-      
-
   };
 
   @action
@@ -55,25 +53,25 @@ export default class AppService {
     handleError: (errors: string[]) => void
   ) {
     this.isLoading = true;
-   try {
-    const { admin, hhh: accessToken, errors } = await loginCall(this.client, {
-      email,
-      password,
-    });
+    try {
+      const { admin, hhh: accessToken, errors } = await loginCall(this.client, {
+        email,
+        password,
+      });
 
-    if (admin && accessToken) {
-      this.isLogedin = true;
-      this.admin = admin;
-      localStorage.setItem("session", accessToken);
-      localStorage.setItem('admin', JSON.stringify(admin))
-    } else if (errors) {
-      handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
+      if (admin && accessToken) {
+        this.isLogedin = true;
+        this.admin = admin;
+        localStorage.setItem("session", accessToken);
+        localStorage.setItem("admin", JSON.stringify(admin));
+      } else if (errors) {
+        handleError(errors.map(({ code, field }: any) => `${code}_${field}`));
+      }
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      this.errorHandler(error.message);
     }
-    this.isLoading = false;
-   } catch (error) {
-     this.isLoading = false;
-     this.errorHandler(error.message)
-   }
   }
 
   @action
@@ -81,13 +79,13 @@ export default class AppService {
     if (this.admin) {
       return;
     }
-    const adminString = localStorage.getItem('admin');
+    const adminString = localStorage.getItem("admin");
     if (adminString) {
-      this.admin = JSON.parse(adminString)
+      this.admin = JSON.parse(adminString);
       this.logginIn();
-      console.log({adminString}, JSON.parse(adminString))
+      console.log({ adminString }, JSON.parse(adminString));
     }
-    console.log(this.admin)
+    console.log(this.admin);
   }
 
   @action
@@ -105,7 +103,7 @@ export default class AppService {
       const { driver, errors } = await createDriverCall(this.client, data);
       console.log({ driver, errors });
       this.isLoading = false;
-  
+
       if (driver) {
         return driver;
       } else {
@@ -120,66 +118,68 @@ export default class AppService {
   @action
   async fetchPayments() {
     this.isLoading = true;
-    
+
     try {
       const payments = await fetchPaymentsCall(this.client);
       this.isLoading = false;
-  
+
       return payments;
     } catch (error) {
       this.isLoading = false;
-      this.errorHandler(error.message)
+      this.errorHandler(error.message);
     }
   }
 
   @action
   async fetchDriver(driverId: number) {
     this.isLoading = true;
-    
+
     try {
-      const driver = await fetchDriverCall(this.client, driverId)
+      const driver = await fetchDriverCall(this.client, driverId);
       this.isLoading = false;
-  
+
       return driver;
     } catch (error) {
       this.isLoading = false;
-      this.errorHandler(error.message)
+      this.errorHandler(error.message);
     }
   }
 
   @action
-  async fetchDefaulters(){
+  async fetchDefaulters() {
     this.isLoading = true;
-    
+
     try {
       const defaulters = await fetchDefaultersCall(this.client);
       this.isLoading = false;
-      
+
+      console.log(defaulters);
+
       return defaulters;
     } catch (error) {
       this.isLoading = false;
-      this.errorHandler(error.message)
+      this.errorHandler(error.message);
     }
   }
 
   @action
-  async fetchDrivers(){
+  async fetchDrivers() {
     return await this.catch(async () => {
-        const drivers = await fetchDriversCall(this.client);
-        
-        this.isLoading = false;
-        return drivers;
-    })
+      const drivers = await fetchDriversCall(this.client);
+
+      this.isLoading = false;
+      return drivers;
+    });
   }
 
   @action
-  async fetchPaymentStats(cashierId?: string){
+  async fetchPaymentStats(cashierId?: string) {
     return await this.catch(async () => {
-        const paymentStat = await fetchPaymentStatsCall(this.client, cashierId);
-        
-        this.isLoading = false;
-        return paymentStat;
-    })
+      const paymentStat = await fetchPaymentStatsCall(this.client, cashierId);
+
+      this.isLoading = false;
+      return paymentStat;
+    });
   }
 
   addErrorHandler(errorHandler: (error: AppErrorType) => void) {
@@ -187,10 +187,10 @@ export default class AppService {
   }
 
   private async catch<T>(loader: () => Promise<T>) {
-    console.log('catch')
+    console.log("catch");
     this.isLoading = true;
     try {
-      console.log('waiting for request to be made')
+      console.log("waiting for request to be made");
       return await loader();
     } catch (error) {
       this.errorHandler(error.message);

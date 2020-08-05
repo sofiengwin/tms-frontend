@@ -10,7 +10,7 @@ interface Props {
 
 const Defaulters: React.FC<Props> = ({ defaulters, state }) => {
   let newState = state !== undefined ? state : "";
-  console.log({ good: defaulters[newState], newState });
+
   return (
     <Container>
       <Report title={newState.toUpperCase()} data={defaulters[newState]} />

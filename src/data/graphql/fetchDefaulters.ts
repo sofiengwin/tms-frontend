@@ -5,30 +5,46 @@ const QUERY = `
   query fetchDefaulters {
     fetchDefaulters {
       monday {
-        ${driverFields}
+        driver {
+          ${driverFields}
+        }
+        defaultedAt
       }
       tuesday {
-        ${driverFields}
+        driver {
+          ${driverFields}
+        }
+        defaultedAt
       }
       wednesday {
-        ${driverFields}
+        driver {
+          ${driverFields}
+        }
+        defaultedAt
       }
       thursday {
-        ${driverFields}
+        driver {
+          ${driverFields}
+        }
+        defaultedAt
       }
       friday {
-        ${driverFields}
+        driver {
+          ${driverFields}
+        }
+        defaultedAt
       }
     }
   }
 `;
 
 interface Response {
-  fetchDefaulters: Dict<ICreateDriver>
+  fetchDefaulters: Dict<{ driver: ICreateDriver; defaultedAt: string }>;
 }
 
 export default async function fetchDefaulters(client: FetchQl) {
   const response: Response = await client(QUERY);
+  console.log({ response });
 
   return response.fetchDefaulters;
 }

@@ -8,6 +8,7 @@ export interface ICreateDriver {
   hometown: string;
   areaOfOperation: string;
   qrCode?: string;
+  defaultedAt?: string;
 }
 
 export const driverFields = `
@@ -20,4 +21,4 @@ export const driverFields = `
   hometown
   areaOfOperation
   qrCode
-`
+`;
