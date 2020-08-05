@@ -55,9 +55,9 @@ const Login = () => {
       history.replace(from);
     }
   };
-  console.log({errors})
+  console.log({ errors });
   return (
-    <Center> 
+    <Center>
       <CardStyle>
         <IStyle size='3em' color='teal' className='fas fa-sign-in-alt'></IStyle>
         <H1Style>Login Here</H1Style>
@@ -101,11 +101,11 @@ const Login = () => {
 
 export default observer(Login);
 
-const FormStyle = styled(Form)`
+export const FormStyle = styled(Form)`
   width: 90%;
   margin: auto;
 `;
-const CardStyle = styled(Card)`
+export const CardStyle = styled(Card)`
   width: 40%;
   padding: 2em 0;
 
@@ -114,16 +114,16 @@ const CardStyle = styled(Card)`
   }
 `;
 
-const H1Style = styled.h1`
+export const H1Style = styled.h1`
   text-align: center;
   padding: 0.2em 0;
   color: #333;
 `;
-const ButtonStyle = styled(Button)`
+export const ButtonStyle = styled(Button)`
   display: block;
   margin: auto;
 `;
-const IStyle = styled.i<{ size: string; color: string }>`
+export const IStyle = styled.i<{ size: string; color: string }>`
   text-align: center;
   padding: 0.1em 0;
   font-size: ${({ size }) => size && size};

@@ -12,6 +12,8 @@ const MyErrorBoundary: React.FC<Props> = ({children}) => {
 
   useEffect(() => {
     appService.addErrorHandler(setAppError);
+
+    // eslint-disable-next-line
   }, [])
   
   console.log(appError, 'ErrorBoundary')

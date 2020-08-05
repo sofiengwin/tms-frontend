@@ -18,6 +18,8 @@ const QrImages = () => {
     }
 
     fetchDrivers();
+
+    // eslint-disable-next-line
   }, []);
 
   return (

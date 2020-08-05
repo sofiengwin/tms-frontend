@@ -17,8 +17,8 @@ import PageNotFound from "./PageNotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CashierProfile from "./components/CashierProfile";
 import DashboardPage from "./components/AdminDashboard";
-
-
+import ResolveForm from "./components/ResolveForm/ResolveForm";
+import Payment from "./components/CollectPayment/";
 
 function App() {
   return (
@@ -32,6 +32,11 @@ function App() {
                   <Home />
                 </ErrorBoundary>
               </PrivateRoute>
+              <PrivateRoute exact path='/collect-payment/:defaultedAt'>
+                <ErrorBoundary>
+                  <Payment />
+                </ErrorBoundary>
+              </PrivateRoute>
               <PrivateRoute exact path='/report'>
                 <ErrorBoundary>
                   <Report />
@@ -40,6 +45,11 @@ function App() {
               <PrivateRoute exact path='/defaulters'>
                 <ErrorBoundary>
                   <Defaulter />
+                </ErrorBoundary>
+              </PrivateRoute>
+              <PrivateRoute exact path='/resolve/:resolveId/for/:defaultedAt'>
+                <ErrorBoundary>
+                  <ResolveForm />
                 </ErrorBoundary>
               </PrivateRoute>
               <Route exact path='/cashier/:cashierId'>

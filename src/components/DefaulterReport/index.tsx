@@ -4,15 +4,9 @@ import { AuthContext } from "../context/AuthContext";
 import Defaulters from "./Defaulters";
 import Spinner from "../ui/Spinner";
 import { observer } from "mobx-react";
-import {Center} from '../ui/Center';
+import { Center } from "../ui/Center";
 
-const options = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-];
+const options = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 
 const DefaultReport: React.FC = () => {
   const { appService } = useContext(AuthContext);
@@ -23,11 +17,11 @@ const DefaultReport: React.FC = () => {
     const fetchDefaulters = async () => {
       const dfts = await appService.fetchDefaulters();
 
-      console.log({ dfts });
-
       if (dfts) {
         setDefaulters(dfts);
       }
+
+      console.log({ dfts });
     };
 
     fetchDefaulters();
@@ -43,15 +37,15 @@ const DefaultReport: React.FC = () => {
       {appService.isLoading ? (
         <Spinner />
       ) : (
-        <Center style={{flexDirection: 'column'}}>
-        <div style={{ padding: "0 1em" }}>
-          <SelectStyle onChange={handleChange}>
-            {options.map((text: string) => (
-              <option value={text}>{text}</option>
-            ))}
-          </SelectStyle>
-        </div>
-        <Defaulters defaulters={defaulters} state={state} />
+        <Center style={{ flexDirection: "column" }}>
+          <div style={{ padding: "0 1em" }}>
+            <SelectStyle onChange={handleChange}>
+              {options.map((text: string) => (
+                <option value={text}>{text}</option>
+              ))}
+            </SelectStyle>
+          </div>
+          <Defaulters defaulters={defaulters} state={state} />
         </Center>
       )}
     </Container>

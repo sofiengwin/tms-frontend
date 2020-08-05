@@ -1,14 +1,14 @@
 import { FetchQl } from "../../lib/client";
-import { IAdmin, adminFields } from "../models/Admin";
-import { ICreateDriver, driverFields } from "../models/Driver";
-import { IPayment} from '../models/Payment';
-
+import {  adminFields } from "../models/Admin";
+import {  driverFields } from "../models/Driver";
+import { IPayment } from "../models/Payment";
 
 const QUERY = `
   query listPayments {
     listPayments {
       amount
       createdAt
+      paymentType
       cashier {
         ${adminFields}
       }
@@ -20,11 +20,11 @@ const QUERY = `
 `;
 
 interface Response {
-  listPayments: IPayment[]
+  listPayments: IPayment[];
 }
 
-export default async function fetchPayments (client: FetchQl) {
+export default async function fetchPayments(client: FetchQl) {
   const response: Response = await client(QUERY);
 
-  return response.listPayments
+  return response.listPayments;
 }

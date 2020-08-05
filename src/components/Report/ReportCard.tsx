@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { IPayment } from "../../data/models/Payment";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -22,17 +22,30 @@ const Report: React.FC<Props> = ({ title, data }) => {
                 <th>Amount</th>
                 <th>Cashier</th>
                 <th>MOT No.</th>
+                <th>Pay Type.</th>
               </tr>
             </thead>
             <tbody>
-              {data.map(({amount, cashier, driver, createdAt }: IPayment, index: number) => (
-                <tr key={index}>
-                  <td>{createdAt}</td>
-                  <td>{amount}</td>
-                  <td><Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link></td>
-                  <td><Link to={`/drivers/${driver.id}`}>{driver.motNumber}</Link></td>
-                </tr>
-              ))}
+              {data.map(
+                (
+                  { amount, cashier, driver, createdAt, paymentType }: IPayment,
+                  index: number
+                ) => (
+                  <tr key={index}>
+                    <td>{createdAt}</td>
+                    <td>{amount}</td>
+                    <td>
+                      <Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link>
+                    </td>
+                    <td>
+                      <Link to={`/drivers/${driver.id}`}>
+                        {driver.motNumber}
+                      </Link>
+                    </td>
+                    <td>{paymentType}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </Table>
         </List>

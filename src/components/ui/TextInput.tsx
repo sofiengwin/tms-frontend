@@ -1,18 +1,26 @@
-import React from 'react';
+import React from "react";
 import { Form } from "react-bootstrap";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface Props {
-  name: string;
-  value: string;
+  name?: string;
+  value?: string;
   type: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   error?: string;
-  label: string;
+  label?: string;
 }
 
-const TextInput: React.FC<Props> = ({name, value, type, onChange, placeholder, error, label}) => {
+const TextInput: React.FC<Props> = ({
+  name,
+  value,
+  type,
+  onChange,
+  placeholder,
+  error,
+  label,
+}) => {
   return (
     <FormGroupStyle controlId={name}>
       <Form.Label>{label}</Form.Label>
@@ -23,12 +31,12 @@ const TextInput: React.FC<Props> = ({name, value, type, onChange, placeholder, e
         onChange={onChange}
         value={value}
       />
-      {error && <Form.Control.Feedback type='invalid'>
-        {error}
-      </Form.Control.Feedback>}
+      {error && (
+        <Form.Control.Feedback type='invalid'>{error}</Form.Control.Feedback>
+      )}
     </FormGroupStyle>
-  )
-}
+  );
+};
 export default TextInput;
 
 const FormGroupStyle = styled(Form.Group)`

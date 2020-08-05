@@ -21,6 +21,8 @@ const CashierProfile = () => {
     }
 
     fetchStats();
+
+    // eslint-disable-next-line
   }, []);
 
   const cardContents = [

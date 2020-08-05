@@ -10,10 +10,12 @@ import ErrorModal from "../ui/ErrorModal";
 interface Props {
   data: string;
   scanAnother: () => void;
+  defaultedAt: string | undefined;
 }
 
-const Payment: React.FC<Props> = ({ data, scanAnother }) => {
+const Payment: React.FC<Props> = ({ data, scanAnother, defaultedAt }) => {
   const { appService } = useContext(AuthContext);
+
   const [success, setSuccess] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>([]);
 
@@ -22,17 +24,22 @@ const Payment: React.FC<Props> = ({ data, scanAnother }) => {
   const [driverId, motNumber] = data.split("::");
 
   const recordPayment = async () => {
-    if (appService.admin) { 
+    if (appService.admin) {
       const payment = await appService.recordPayment(
-        { amount: 250, driverId: Number(driverId), cashierId: appService.admin.id},
+        {
+          amount: 250,
+          driverId: Number(driverId),
+          cashierId: appService.admin.id,
+          resolvedAt: defaultedAt ? defaultedAt : null,
+        },
         setErrors
       );
-  
+
       if (payment) {
         setSuccess(true);
       }
     } else {
-      throw new Error("Unauthorized")
+      throw new Error("Unauthorized");
     }
   };
 
