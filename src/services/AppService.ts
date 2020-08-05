@@ -5,7 +5,6 @@ import recordPaymentCall, {
 } from "../data/graphql/recordPayment";
 import loginCall from "../data/graphql/login";
 import { IAdmin } from "../data/models/Admin";
-import meCall from "../data/graphql/me";
 import createDriverCall from "../data/graphql/createDriver";
 import { ICreateDriver } from "../data/models/Driver";
 import fetchPaymentsCall from "../data/graphql/fetchPayments";

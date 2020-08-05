@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { observer } from "mobx-react";
 import { AuthContext } from "../context/AuthContext";
 import Success from "./Success";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ErrorModal from "../ui/ErrorModal";
 
 interface Props {

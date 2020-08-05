@@ -1,6 +1,6 @@
 import { FetchQl } from "../../lib/client";
-import { IAdmin, adminFields } from "../models/Admin";
-import { ICreateDriver, driverFields } from "../models/Driver";
+import {  adminFields } from "../models/Admin";
+import {  driverFields } from "../models/Driver";
 import { IPayment } from "../models/Payment";
 
 const QUERY = `

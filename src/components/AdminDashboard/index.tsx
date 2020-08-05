@@ -6,10 +6,8 @@ import CardUi from "../ui/Card";
 import { AuthContext } from "../context/AuthContext";
 import CenterSpinner from "../ui/Spinner";
 
-interface Props {
-}
 
-const PaymentStats: React.FC<Props> = ({}) => {
+const PaymentStats: React.FC<any> = () => {
   const [stats, setStats] = useState<any>({})
   const {appService} = useContext(AuthContext)
 
@@ -20,6 +18,8 @@ const PaymentStats: React.FC<Props> = ({}) => {
     }
 
     fetchStats();
+
+    // eslint-disable-next-line
   }, []);
 
   

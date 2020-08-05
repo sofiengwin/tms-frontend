@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
-import { ICreateDriver } from "../../data/models/Driver";
 
 interface Props {
   title: any;

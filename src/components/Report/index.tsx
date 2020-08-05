@@ -23,6 +23,8 @@ const Reports: React.FC = () => {
 
   useEffect(() => {
     fetchPayments();
+
+    // eslint-disable-next-line
   }, []);
 
   return (

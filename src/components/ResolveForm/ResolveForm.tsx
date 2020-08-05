@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Center } from "../ui/Center";
-import TextInput from "../ui/TextInput";
 import { CardStyle, IStyle, H1Style, FormStyle, ButtonStyle } from "../Login";
 import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -11,7 +10,7 @@ const ResolveForm = () => {
   const { appService } = useContext(AuthContext);
   const { resolveId, defaultedAt } = useParams();
   const [text, setText] = useState("");
-  const [success, setSuccess] = React.useState(false);
+  // const [success, setSuccess] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [successToast, setSuccessToast] = React.useState<boolean>(false);
 
@@ -38,13 +37,14 @@ const ResolveForm = () => {
       );
 
       if (payment) {
-        setSuccess(true);
+        // setSuccess(true);
         setSuccessToast(true);
       }
     } else {
       throw new Error("Unauthorized");
     }
   };
+  console.log(errors)
   return (
     <Center>
       <CardStyle>
