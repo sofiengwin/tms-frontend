@@ -1,9 +1,9 @@
 // @ts-nocheck
-import React from 'react';
-import QrReader from 'react-qr-scanner';
-import styled from 'styled-components';
-import ErrorModal from '../ui/ErrorModal';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import QrReader from "react-qr-scanner";
+import styled from "styled-components";
+import ErrorModal from "../ui/ErrorModal";
+import { useHistory } from "react-router-dom";
 
 const Preview = styled.div`
   background: black;
@@ -20,24 +20,27 @@ const Wrapper = styled.div`
 
 const previewStyle = {
   height: 500,
-  width: '100%',
-  objectFit: 'fill',
-}
+  width: "100%",
+  objectFit: "fill",
+};
 
 interface Props {
   onScan: (data: any) => void;
+  defaultedAt: string | undefined;
 }
 
-const Scanner: React.FC<Props> = ({onScan}) => {
-  const [errors, setErrors] = React.useState<string[]>([])
+const Scanner: React.FC<Props> = ({ onScan, defaultedAt }) => {
+  const [errors, setErrors] = React.useState<string[]>([]);
 
   const history = useHistory();
 
   const handleError = (error: any) => {
     if (error) {
-      setErrors([`Something is wrong with the scanner. Try again later or contact X ${error}`])
+      setErrors([
+        `Something is wrong with the scanner. Try again later or contact X ${error}`,
+      ]);
     }
-  }
+  };
 
   return (
     <>
@@ -46,7 +49,7 @@ const Scanner: React.FC<Props> = ({onScan}) => {
         errorMessages={errors}
         onClose={() => {
           setErrors([]);
-          history.push('/');
+          history.push("/");
         }}
       />
       <Wrapper>
@@ -57,7 +60,7 @@ const Scanner: React.FC<Props> = ({onScan}) => {
             onError={handleError}
             style={previewStyle}
             delay={1000}
-            onLoad={() => console.log('loaded')}
+            onLoad={() => console.log("loaded")}
             facingMode={"rear"}
           />
         </Preview>
@@ -67,6 +70,6 @@ const Scanner: React.FC<Props> = ({onScan}) => {
       </Wrapper>
     </>
   );
-}
+};
 
 export default Scanner;

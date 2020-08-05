@@ -24,7 +24,7 @@ const CollectPayment = () => {
           defaultedAt={defaultedAt}
         />
       ) : (
-        <Scanner onScan={onScan} />
+        <Scanner onScan={onScan} defaultedAt={defaultedAt} />
       )}
     </>
   );
