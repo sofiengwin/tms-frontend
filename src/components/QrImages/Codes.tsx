@@ -15,7 +15,7 @@ const QrImages: React.FC<Props> = ({ drivers }) => {
           <Image>
             <img src={qrCode} alt='QR Code For User' />
           </Image>
-          <p>{motNumber}</p>
+          <p><strong>MOT NO: </strong>{motNumber}</p>
         </MotNumber>
       ))}
     </Container>
@@ -25,10 +25,10 @@ const QrImages: React.FC<Props> = ({ drivers }) => {
 export default QrImages;
 
 const Container = styled.div`
-  padding: 2% 10%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8em;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 90px;
+  margin: 0 auto;
 `;
 const Image = styled.div`
   width: 100%;
@@ -38,6 +38,7 @@ const Image = styled.div`
   }
 `;
 const MotNumber = styled.div`
+  border: 1px dashed;
   p {
     width: 100%;
     text-align: center;
