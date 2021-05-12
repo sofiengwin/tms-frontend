@@ -14,7 +14,7 @@
     "@types/react-select": "^3.0.13",
     "bootstrap": "^4.5.0",
     "chart": "^0.1.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "graphql": "^15.1.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
